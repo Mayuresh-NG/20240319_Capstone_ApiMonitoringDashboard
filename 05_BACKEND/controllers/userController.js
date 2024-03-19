@@ -57,7 +57,7 @@ const signup = async (req, res) => {
 const login = async (req, res) => {
   try {
     const userData = req.body;
-    const username = userData.email;
+    const email = userData.email;
     const password = userData.password;
 
     // validate  inputs
@@ -70,7 +70,7 @@ const login = async (req, res) => {
     }
 
     // Find the user by username
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ email });
 
     if (!user) {
       return res.status(404).json({
