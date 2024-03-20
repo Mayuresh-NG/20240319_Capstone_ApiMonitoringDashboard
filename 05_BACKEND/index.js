@@ -1,5 +1,6 @@
 // Import required modules
 const express = require("express");
+const cors = require("cors");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
@@ -9,6 +10,7 @@ dotenv.config();
 
 // Create an Express app
 const app = express();
+app.use(cors());
 
 // Parse JSON requests
 app.use(bodyParser.json());

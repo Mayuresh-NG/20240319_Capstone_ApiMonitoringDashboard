@@ -1,1 +1,73 @@
-<p>dashboard works!</p>
+<body>
+  <div class="sidebar">
+    <img class="logo" src="../../../assets/images/api-svgrepo-com.svg" />
+    <div class="sidebar-item" [class.active]="isActive('/dashboard')" (click)="navigateTo('/dashboard')">
+      <i class="fa-solid fa-chart-simple"></i> Dashboard
+    </div>
+    <div class="sidebar-item" [class.active]="isActive('/api-management')" (click)="navigateTo('/api-management')">
+      <i class="fas fa-cogs"></i> API Management
+    </div>
+    <div class="sidebar-item" [class.active]="isActive('/analytics')" (click)="navigateTo('/analytics')">
+      <i class="fas fa-chart-bar"></i> Analytics
+    </div>
+    <div class="sidebar-item" [class.active]="isActive('/alerts')" (click)="navigateTo('/alerts')">
+      <i class="fas fa-bell"></i> Alerts
+    </div>
+</div>
+
+
+  <div class="main-content">
+    <div class="navbar">
+      <h1>
+        Dashboard
+        <p>Welcome to API's Dashboard</p>
+      </h1>
+      <div class="right-items">
+        <div class="search-bar-container">
+          <input
+            type="text"
+            class="search-bar"
+            placeholder="Search everything"
+          />
+          <i class="fas fa-search search-icon"></i>
+        </div>
+
+        <div class="user-dropdown">
+          <div class="user-icon" (click)="toggleDropdown()">
+            <!-- Your user icon goes here -->
+            <i style="font-size: 40px" class="fas fa-user-circle"></i>
+          </div>
+          <div class="dropdown-menu" [class.show]="isDropdownOpen">
+            <button class="items" (mouseover)="viewProfile()">
+              View Profile
+            </button>
+            <div *ngIf="userInfo" class="user-info">
+              <h6><strong>Name:</strong> {{ userInfo.fullName }}</h6>
+              <h6><strong>Email:</strong> {{ userInfo.email }}</h6>
+            </div>
+            <button class="items" (click)="logout()">Logout</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-container">
+      <div class="card">
+        <div class="card-header">Throughput</div>
+        <div class="chart"></div>
+      </div>
+      <div class="card">
+        <div class="card-header">Response Time</div>
+        <div class="summary"></div>
+      </div>
+      <div class="card">
+        <div class="card-header">Availability</div>
+        <div class="chart"></div>
+      </div>
+      <div class="card">
+        <div class="card-header">Error Rate</div>
+        <div class="summary"></div>
+      </div>
+    </div>
+  </div>
+</body>

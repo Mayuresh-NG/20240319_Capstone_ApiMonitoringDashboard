@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { validateInputs } = require("../validators/user_details_validation");
+const verifyToken = require("../middlewares/auth");
 
 // internal imports
 const SECRET_KEY = process.env.SECRET_KEY;
@@ -27,8 +28,7 @@ const signup = async (req, res) => {
     if (existingUser) {
       return res.status(400).json({
         success: false,
-        message:
-          "An account already exists with the provided email.",
+        message: "An account already exists with the provided email.",
       });
     }
 
@@ -113,7 +113,29 @@ const login = async (req, res) => {
   }
 };
 
+const info = async (req, res) => {
+  try {
+    const decodedToken = req.decoded;
+
+    const userExist = await User.findOne({ email: decodedToken.email });
+
+    if (!userExist) {
+      return res.status(404).send({ error: "User not Found." });
+    }
+
+    if (!(decodedToken.email === userExist.email)) {
+      return res.status(401).send({ error: "Sorry, you're not Authorized." });
+    }
+
+    return res.status(200).send(userExist);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({ error: "Failed to retrieve data." });
+  }
+};
+
 module.exports = {
   signup,
   login,
+  info,
 };

@@ -1,22 +1,39 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RouterOutlet } from '@angular/router';
 import { DashboardComponent } from './PAGES/dashboard/dashboard.component';
+import { LandingPageComponent } from './PAGES/landing-page/landing-page.component';
+import { LoginPopupComponent } from './COMPONENTS/login-popup/login-popup.component';
+import { SignupPopupComponent } from './COMPONENTS/signup-popup/signup-popup.component';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent
+    DashboardComponent,
+    LandingPageComponent,
+    LoginPopupComponent,
+    SignupPopupComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterOutlet
+    RouterOutlet,
+    CommonModule,
+    FormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatMenuModule,
+    MatIconModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
