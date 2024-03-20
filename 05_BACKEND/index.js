@@ -17,6 +17,7 @@ app.use(bodyParser.json());
 
 // Define routes
 const userRoutes = require("./routes/userRoutes");
+const apiRoutes = require("./routes/apiRoutes");
 
 // Connect to MongoDB asynchronously
 const connectToMongoDB = async () => {
@@ -31,6 +32,7 @@ const connectToMongoDB = async () => {
 
 // Use the routes in your app
 app.use("/users", userRoutes);
+app.use("/api", apiRoutes);
 
 // Start the server after connecting to MongoDB
 const startServer = async () => {

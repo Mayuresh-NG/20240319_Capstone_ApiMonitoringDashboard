@@ -1,20 +1,35 @@
 <body>
   <div class="sidebar">
     <img class="logo" src="../../../assets/images/api-svgrepo-com.svg" />
-    <div class="sidebar-item" [class.active]="isActive('/dashboard')" (click)="navigateTo('/dashboard')">
+    <div
+      class="sidebar-item"
+      [class.active]="isActive('/dashboard/dashboard-data')"
+      (click)="navigateTo('/dashboard/dashboard-data')"
+    >
       <i class="fa-solid fa-chart-simple"></i> Dashboard
     </div>
-    <div class="sidebar-item" [class.active]="isActive('/api-management')" (click)="navigateTo('/api-management')">
+    <div
+      class="sidebar-item"
+      [class.active]="isActive('/dashboard/apimanager')"
+      (click)="navigateTo('/dashboard/apimanager')"
+    >
       <i class="fas fa-cogs"></i> API Management
     </div>
-    <div class="sidebar-item" [class.active]="isActive('/analytics')" (click)="navigateTo('/analytics')">
+    <div
+      class="sidebar-item"
+      [class.active]="isActive('/dashboard/analytics')"
+      (click)="navigateTo('/dashboard/analytics')"
+    >
       <i class="fas fa-chart-bar"></i> Analytics
     </div>
-    <div class="sidebar-item" [class.active]="isActive('/alerts')" (click)="navigateTo('/alerts')">
+    <div
+      class="sidebar-item"
+      [class.active]="isActive('/dashboard/alerts')"
+      (click)="navigateTo('/dashboard/alerts')"
+    >
       <i class="fas fa-bell"></i> Alerts
     </div>
-</div>
-
+  </div>
 
   <div class="main-content">
     <div class="navbar">
@@ -51,23 +66,6 @@
       </div>
     </div>
 
-    <div class="card-container">
-      <div class="card">
-        <div class="card-header">Throughput</div>
-        <div class="chart"></div>
-      </div>
-      <div class="card">
-        <div class="card-header">Response Time</div>
-        <div class="summary"></div>
-      </div>
-      <div class="card">
-        <div class="card-header">Availability</div>
-        <div class="chart"></div>
-      </div>
-      <div class="card">
-        <div class="card-header">Error Rate</div>
-        <div class="summary"></div>
-      </div>
-    </div>
+    <router-outlet></router-outlet>
   </div>
 </body>

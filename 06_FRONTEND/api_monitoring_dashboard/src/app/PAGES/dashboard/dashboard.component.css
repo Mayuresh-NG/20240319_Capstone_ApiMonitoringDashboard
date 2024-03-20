@@ -3,6 +3,9 @@ body {
   margin: 0;
   padding: 0;
   background-color: #344e41;
+  /* z-index: -55555; */
+  max-height: auto;
+  min-height: 100vh;
 }
 .logo {
   display: flex;
@@ -51,6 +54,7 @@ body {
 .sidebar-item.active {
   background-color: #344e41;
   color: #588157;
+  font-weight: bolder;
 }
 
 .main-content {
@@ -118,20 +122,7 @@ body {
   margin-top: 10px; /* Adjusted for navbar height */
   margin-left: 20px;
 }
-.card {
-  width: 45%; /* Adjusted for margin */
-  margin: 10px;
-  padding: 20px;
-  background-color: #3a5a40;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  border-radius: 15px;
-  height: 400px;
-}
-.card-header {
-  font-size: 1.2em;
-  margin-bottom: 10px;
-  color: #dad7cd;
-}
+
 .chart {
   /* Your chart styles */
 }

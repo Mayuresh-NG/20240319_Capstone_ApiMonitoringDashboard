@@ -1,7 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { validateInputs } = require("../validators/user_details_validation");
-const verifyToken = require("../middlewares/auth");
 
 // internal imports
 const SECRET_KEY = process.env.SECRET_KEY;

@@ -1,0 +1,48 @@
+<div class="container">
+  <div *ngFor="let api of apis" class="api-card">
+    <div *ngIf="!api.editMode">
+      <h3>{{ api.name }}</h3>
+      <p class="url">URL: {{ api.apiUrl }}</p>
+      <p>Interval: {{ api.monitoringInterval }}</p>
+    </div>
+    <div *ngIf="api.editMode">
+      <input type="text" [(ngModel)]="api.name" placeholder="API Name" />
+      <input type="text" [(ngModel)]="api.apiUrl" placeholder="API URL" />
+      <input
+        type="number"
+        [(ngModel)]="api.monitoringInterval"
+        placeholder="Monitoring Interval"
+      />
+    </div>
+    <div class="button-group">
+      <button *ngIf="!api.editMode" (click)="editApi(api)" class="edit-button">
+        <i class="fa-solid fa-pen-to-square"></i>
+      </button>
+      <button
+        *ngIf="api.editMode"
+        (click)="saveChanges(api)"
+        class="save-button"
+      >
+        Save
+      </button>
+      <button
+        *ngIf="api.editMode"
+        (click)="cancelEdit(api)"
+        class="cancel-button"
+      >
+        Cancel
+      </button>
+      <button (click)="deleteApi(api)" class="delete-button">
+        <i class="fas fa-trash-alt"></i>
+      </button>
+    </div>
+    <button
+      *ngIf="!api.editMode"
+      (click)="startMonitoring(api)"
+      class="start-button"
+    >
+      Start Monitoring
+    </button>
+  </div>
+</div>
+<button (click)="addApi()" class="add-button">+</button>

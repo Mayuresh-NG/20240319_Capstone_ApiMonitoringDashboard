@@ -13,6 +13,10 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
+import { ApiManagementComponent } from './COMPONENTS/api-management/api-management.component';
+import { AnalyticsComponent } from './COMPONENTS/analytics/analytics.component';
+import { AlertsComponent } from './COMPONENTS/alerts/alerts.component';
+import { DashboardDataComponent } from './COMPONENTS/dashboard-data/dashboard-data.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +25,10 @@ import { MatIconModule } from '@angular/material/icon';
     LandingPageComponent,
     LoginPopupComponent,
     SignupPopupComponent,
+    ApiManagementComponent,
+    AnalyticsComponent,
+    AlertsComponent,
+    DashboardDataComponent,
   ],
   imports: [
     BrowserModule,
