@@ -1,5 +1,5 @@
 <div class="container">
-  <div *ngFor="let api of apis" class="api-card">
+  <div *ngFor="let api of filteredApis" class="api-card">
     <div *ngIf="!api.editMode">
       <h3>{{ api.name }}</h3>
       <p class="url">URL: {{ api.apiUrl }}</p>

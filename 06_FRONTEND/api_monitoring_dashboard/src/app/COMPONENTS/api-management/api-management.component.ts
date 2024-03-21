@@ -1,17 +1,50 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ApiService } from '../../CORE/services/api.service';
+import { SearchService } from '../../CORE/services/search.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-api-management',
   templateUrl: './api-management.component.html',
   styleUrl: './api-management.component.css',
 })
-export class ApiManagementComponent {
+export class ApiManagementComponent implements OnInit, OnDestroy {
+  filteredApis: Api[] = [];
+  searchQuerySubscription = new Subscription();
+
   ngOnInit(): void {
     this.fetchApiConfigs();
+    this.searchQuerySubscription = this.searchService.searchQuery$.subscribe(
+      (query) => {
+        this.filterApis(query);
+      }
+    );
   }
+
+  ngOnDestroy(): void {
+    this.searchQuerySubscription.unsubscribe();
+  }
+
   apis: Api[] = [];
-  constructor(private apiService: ApiService) {}
+
+  constructor(
+    private apiService: ApiService,
+    private searchService: SearchService
+  ) {}
+
+  filterApis(query: string): void {
+    if (!query) {
+      // If the search query is empty or null, show all APIs
+      this.filteredApis = this.apis;
+    } else {
+      // Filter the APIs based on the search query
+      this.filteredApis = this.apis.filter(
+        (api) =>
+          api.name.toLowerCase().includes(query.toLowerCase()) ||
+          api.apiUrl.toLowerCase().includes(query.toLowerCase())
+      );
+    }
+  }
 
   addApi(): void {
     const newApiData = {
@@ -72,6 +105,7 @@ export class ApiManagementComponent {
     this.apiService.getApiConfigs().subscribe(
       (configs) => {
         this.apis = configs;
+        this.filterApis('');
       },
       (error) => {
         console.error('Failed to fetch API configurations:', error);

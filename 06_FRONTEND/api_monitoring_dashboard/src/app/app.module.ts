@@ -18,6 +18,9 @@ import { AnalyticsComponent } from './COMPONENTS/analytics/analytics.component';
 import { AlertsComponent } from './COMPONENTS/alerts/alerts.component';
 import { DashboardDataComponent } from './COMPONENTS/dashboard-data/dashboard-data.component';
 
+import { OverlayModule } from '@angular/cdk/overlay';
+import { MatSelectModule } from '@angular/material/select';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +42,9 @@ import { DashboardDataComponent } from './COMPONENTS/dashboard-data/dashboard-da
     HttpClientModule,
     BrowserAnimationsModule,
     MatMenuModule,
-    MatIconModule
+    MatIconModule,
+    OverlayModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent],

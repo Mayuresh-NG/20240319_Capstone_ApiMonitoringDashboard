@@ -5,6 +5,8 @@ const router = express.Router();
 const apiController = require("../controllers/apiController");
 const { verifyToken } = require('../middlewares/auth');
 
+
+
 router.use(verifyToken)
 router.post('/config', apiController.config);
 router.get('/loadapi', apiController.loadapi);

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SignupService } from '../../CORE/services/auth.service';
 import { Router } from '@angular/router';
+import { SearchService } from '../../CORE/services/search.service';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,7 +12,16 @@ import { Router } from '@angular/router';
 export class DashboardComponent {
   email: string = '';
 
-  constructor(private signupService: SignupService, private router: Router) {}
+  constructor(
+    private signupService: SignupService,
+    private router: Router,
+    private searchService: SearchService
+  ) {}
+
+  onSearchInputChange(event: any): void {
+    const query = event.target.value; // Access value property safely
+    this.searchService.setSearchQuery(query);
+  }
 
   userInfo: any;
   isDropdownOpen: boolean = false;
