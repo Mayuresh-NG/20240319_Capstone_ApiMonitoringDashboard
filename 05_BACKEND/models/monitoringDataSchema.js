@@ -7,22 +7,22 @@ const monitoringDataSchema = new mongoose.Schema({
     required: true,
   },
   timestamp: { type: Date, default: Date.now },
-  responseTime: { type: Number, required: true }, // in milliseconds
-  status: { type: String, required: true },
+  responseTime: { type: Number },
+  status: { type: String},
   errorMessage: { type: String },
-  throughput: { type: Number }, // Requests per second
-  successRate: { type: Number }, // Percentage of successful requests
-  errorRate: { type: Number }, // Percentage of failed requests
-  averagePayloadSize: { type: Number }, // Average size of the response payload in bytes
-  p95ResponseTime: { type: Number }, // 95th percentile response time in milliseconds
-  p99ResponseTime: { type: Number }, // 99th percentile response time in milliseconds
-  
-  requestCount: { type: Number }, // Total number of requests during the monitoring interval
-  failureCount: { type: Number }, // Total number of failed requests during the monitoring interval
-  downtime: { type: Number }, // Total downtime in milliseconds during the monitoring interval
-  peakResponseTime: { type: Number }, // Maximum response time in milliseconds during the monitoring interval
-  minResponseTime: { type: Number }, // Minimum response time in milliseconds during the monitoring interval
-  averageResponseTime: { type: Number }, // Average response time in milliseconds during the monitoring interval
+  throughput: { type: Number },
+  requestCount: { type: Number, default: 1, required: true },
+  successRate: { type: Number },
+  errorRate: { type: Number },
+  averagePayloadSize: { type: Number },
+  p95ResponseTime: { type: Number },
+  p99ResponseTime: { type: Number },
+  failureCount: { type: Number },
+  downtime: { type: Number },
+  peakResponseTime: { type: Number },
+  minResponseTime: { type: Number },
+  averageResponseTime: { type: Number },
+  userAgent:{type :String}
 });
 
 const MonitoringData = mongoose.model("MonitoringData", monitoringDataSchema);

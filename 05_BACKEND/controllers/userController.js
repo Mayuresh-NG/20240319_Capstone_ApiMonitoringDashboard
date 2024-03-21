@@ -1,10 +1,12 @@
+// external imports
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { validateInputs } = require("../validators/user_details_validation");
+
 
 // internal imports
 const SECRET_KEY = process.env.SECRET_KEY;
 const User = require("../models/userSchema");
+const { validateInputs } = require("../validators/user_details_validation");
 
 const signup = async (req, res) => {
   try {
