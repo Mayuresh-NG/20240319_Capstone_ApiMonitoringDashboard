@@ -13,7 +13,7 @@ const mongoURI =
   "mongodb+srv://mayureshngorantiwar:XkHynoxmktHsKefm@cluster0.qezkejq.mongodb.net/API_MONITORING";
 
 mongoose
-  .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(mongoURI)
   .then(() => console.log("MongoDB connection established"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
@@ -27,18 +27,14 @@ const monitorAPI = async (apiConfigId, userAgent) => {
     }
 
     let mdc = await MonitoringData.findOne({ apiConfigId });
+    console.log(mdc);
 
     if (!mdc) {
       // If no MonitoringData document exists, create a new one
       mdc = new MonitoringData({
         apiConfigId: apiConfig._id,
-        requestCount: 1, // Set requestCount to 1 for the first call
       });
-    } else {
-      mdc.requestCount += 1; // Increment requestCount for subsequent calls
     }
-
-    await mdc.save(); // Save the MonitoringData document
 
     const startTime = Date.now();
     let response,
@@ -56,46 +52,39 @@ const monitorAPI = async (apiConfigId, userAgent) => {
 
     const endTime = Date.now();
     const responseTime = endTime - startTime;
-    const reqPayloadSize = 0;
+    const reqPayloadSize = 0; // Placeholder, calculate if needed
     const resPayloadSize = JSON.stringify(response?.data)?.length || 0;
 
-    const requestCount = mdc.requestCount;
-    const failureCount = errorMessage ? 1 : 0;
-    const downtime = failureCount > 0 ? responseTime : 0;
-    const peakResponseTime = responseTime;
-    const minResponseTime = responseTime;
-    const successRate = ((requestCount - failureCount) / requestCount) * 100;
-    const errorRate = 100 - successRate;
-    const throughput = requestCount / responseTime;
-    let averagePayloadSize = resPayloadSize / requestCount;
-    let p95ResponseTime = 0;
-    let p99ResponseTime = 0;
-    let averageResponseTime = responseTime / requestCount;
+    // Update arrays with new data
+    mdc.timestamp.push(new Date());
+    mdc.responseTime.push(responseTime);
+    mdc.status.push(response ? response.status : "Error");
+    mdc.errorMessage.push(errorMessage);
+    mdc.reqPayloadSize.push(reqPayloadSize);
+    mdc.resPayloadSize.push(resPayloadSize);
 
-    const monitoringData = new MonitoringData({
-      apiConfigId: apiConfig._id,
-      timestamp: new Date(),
-      responseTime,
-      status: response ? response.status : "Error",
-      errorMessage,
-      reqPayloadSize,
-      resPayloadSize,
-      throughput,
-      successRate,
-      errorRate,
-      averagePayloadSize,
-      p95ResponseTime,
-      p99ResponseTime,
-      requestCount,
-      failureCount,
-      downtime,
-      peakResponseTime,
-      minResponseTime,
-      averageResponseTime,
-      userAgent,
-    });
+    // Calculate and update aggregate values
+    const requestCount = mdc.requestCount + 1;
+    mdc.throughput.push(requestCount / (5 * 60));
+    const peakResponseTime = Math.max(...mdc.responseTime);
+    const minResponseTime = Math.min(...mdc.responseTime);
+    const averagePayloadSize =
+      mdc.resPayloadSize.reduce((a, b) => a + b, 0) / mdc.requestCount;
+    const averageResponseTime =
+      mdc.responseTime.reduce((a, b) => a + b, 0) / mdc.requestCount;
+    const p95ResponseTime = calculatePercentile(mdc.responseTime, 95);
+    const p99ResponseTime = calculatePercentile(mdc.responseTime, 99);
 
-    await monitoringData.save();
+    // Update aggregate fields
+    mdc.requestCount = requestCount;
+    mdc.peakResponseTime = peakResponseTime;
+    mdc.minResponseTime = minResponseTime;
+    mdc.averagePayloadSize = averagePayloadSize;
+    mdc.averageResponseTime = averageResponseTime;
+    mdc.p95ResponseTime = p95ResponseTime;
+    mdc.p99ResponseTime = p99ResponseTime;
+
+    await mdc.save();
 
     console.log("API monitoring data collected successfully");
   } catch (error) {
@@ -103,17 +92,25 @@ const monitorAPI = async (apiConfigId, userAgent) => {
   }
 };
 
+// Function to calculate percentile
+const calculatePercentile = (arr, percentile) => {
+  const sortedArr = arr.slice().sort((a, b) => a - b);
+  const index = Math.ceil((percentile / 100) * arr.length);
+  return sortedArr[index - 1];
+};
+
 // Example endpoint to trigger monitoring of a specific API
 app.get("/monitor-api/:apiConfigId", async (req, res) => {
   try {
     const apiConfigId = req.params.apiConfigId;
     const userAgent = req.headers["user-agent"];
+    const interval = parseInt(req.headers["monitoring-interval"]);
     // Trigger API monitoring immediately
     await monitorAPI(apiConfigId, userAgent);
     // Set interval to trigger API monitoring every 5 minutes (adjust interval as needed)
     setInterval(async () => {
-      await monitorAPI(apiConfigId);
-    }, 5000); // Interval in milliseconds (5 minutes)
+      await monitorAPI(apiConfigId, userAgent);
+    }, interval); // Interval in milliseconds (5 minutes)
     res.send("API monitoring started");
   } catch (error) {
     console.error("Failed to start API monitoring:", error);
