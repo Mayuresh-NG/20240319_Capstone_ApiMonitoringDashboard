@@ -17,6 +17,7 @@ import { ApiManagementComponent } from './COMPONENTS/api-management/api-manageme
 import { AnalyticsComponent } from './COMPONENTS/analytics/analytics.component';
 import { AlertsComponent } from './COMPONENTS/alerts/alerts.component';
 import { DashboardDataComponent } from './COMPONENTS/dashboard-data/dashboard-data.component';
+import { ResponseChartComponent } from './COMPONENTS/response-chart/response-chart.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { DashboardDataComponent } from './COMPONENTS/dashboard-data/dashboard-da
     AnalyticsComponent,
     AlertsComponent,
     DashboardDataComponent,
+    ResponseChartComponent
   ],
   imports: [
     BrowserModule,
