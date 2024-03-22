@@ -20,6 +20,7 @@ import { DashboardDataComponent } from './COMPONENTS/dashboard-data/dashboard-da
 
 import { OverlayModule } from '@angular/cdk/overlay';
 import { MatSelectModule } from '@angular/material/select';
+import { ResponseChartComponent } from './COMPONENTS/response-chart/response-chart.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { MatSelectModule } from '@angular/material/select';
     AnalyticsComponent,
     AlertsComponent,
     DashboardDataComponent,
+    ResponseChartComponent
   ],
   imports: [
     BrowserModule,

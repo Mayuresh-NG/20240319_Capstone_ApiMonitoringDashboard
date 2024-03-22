@@ -2,11 +2,11 @@
   <div class="dropdown-container">
     <label class="lable">Select API</label>
     <select (change)="onApiSelect($event)">
-      <option *ngFor="let api of apis" [value]="api.id">{{ api.name }}</option>
+      <option *ngFor="let api of apis" [value]="api._id">{{ api.name }}</option>
     </select>
   </div>
 
   <div class="charts-container">
-    <!-- Display analytics charts here -->
+    <app-response-chart [selectedApiId]="selectedApiId"></app-response-chart>
   </div>
 </div>

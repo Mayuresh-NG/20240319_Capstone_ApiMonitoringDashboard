@@ -8,6 +8,7 @@ import { ApiService } from '../../CORE/services/api.service';
 })
 export class AnalyticsComponent implements OnInit {
   apis: any[] = []; // Basic structure for API data
+  selectedApiId: string="";
 
   constructor(private apiService: ApiService) {}
 
@@ -28,9 +29,6 @@ export class AnalyticsComponent implements OnInit {
   }
 
   onApiSelect(event: any): void {
-    const apiId = event.target.value;
-    // Implement logic to open analytics charts for the selected API
-    console.log('Selected API:', apiId);
-    // Redirect or open analytics charts here
+    this.selectedApiId = event.target.value;
   }
 }
