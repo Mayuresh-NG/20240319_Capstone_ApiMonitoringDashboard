@@ -110,3 +110,8 @@
 .delete-button:focus {
   outline: none;
 }
+
+.monitoring-active {
+  background-color: red;
+  color: white;
+}

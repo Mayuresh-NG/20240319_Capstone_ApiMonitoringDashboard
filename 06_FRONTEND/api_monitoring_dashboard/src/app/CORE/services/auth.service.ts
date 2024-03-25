@@ -41,6 +41,7 @@ export class SignupService {
     // Check if token exists in local storage
     return !!this.getToken();
   }
+  
   getUserInfo(): Observable<any> {
     // Assuming your API endpoint for user information is '/info'
     const headers = new HttpHeaders({

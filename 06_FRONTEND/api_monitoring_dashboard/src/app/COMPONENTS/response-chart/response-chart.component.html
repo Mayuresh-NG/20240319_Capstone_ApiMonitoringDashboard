@@ -2,20 +2,13 @@
   <div class="card">
     <div class="card-header">Response Time</div>
     <div class="chart">
-      <!-- <ngx-charts-line-chart
-        [view]="[700, 300]"
-        [scheme]="colorScheme"
-        [results]="chartData"
-        [gradient]="false"
-        [xAxis]="true"
-        [yAxis]="true"
-        [legend]="true"
-        [showXAxisLabel]="true"
-        [showYAxisLabel]="true"
-        [xAxisLabel]="'Request'"
-        [yAxisLabel]="'Response Time (ms)'"
-      >
-      </ngx-charts-line-chart> -->
+      <canvas id="response-chart"></canvas>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">Response Payload Size</div>
+    <div class="chart">
+      <canvas id="payload-chart"></canvas>
     </div>
   </div>
 </div>

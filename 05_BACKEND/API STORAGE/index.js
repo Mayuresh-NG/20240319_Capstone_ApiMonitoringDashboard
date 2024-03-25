@@ -1,12 +1,14 @@
 const express = require("express");
 const axios = require("axios");
+const cors = require("cors");
 const MonitoringData = require("../models/monitoringDataSchema");
 const APIConfig = require("../models/apiConfigSchema");
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 
 app.use(express.json());
+app.use(cors());
 
 const mongoose = require("mongoose");
 const mongoURI =
@@ -52,7 +54,7 @@ const monitorAPI = async (apiConfigId, userAgent) => {
 
     const endTime = Date.now();
     const responseTime = endTime - startTime;
-    const reqPayloadSize = 0; // Placeholder, calculate if needed
+    const reqPayloadSize = 0; 
     const resPayloadSize = JSON.stringify(response?.data)?.length || 0;
 
     // Update arrays with new data
@@ -100,18 +102,18 @@ const calculatePercentile = (arr, percentile) => {
 };
 
 // Example endpoint to trigger monitoring of a specific API
-app.get("/monitor-api/:apiConfigId", async (req, res) => {
+app.post("/monitor-api/:apiConfigId/", async (req, res) => {
   try {
     const apiConfigId = req.params.apiConfigId;
     const userAgent = req.headers["user-agent"];
     const interval = parseInt(req.headers["monitoring-interval"]);
+    console.log(interval)
     // Trigger API monitoring immediately
     await monitorAPI(apiConfigId, userAgent);
     // Set interval to trigger API monitoring every 5 minutes (adjust interval as needed)
     setInterval(async () => {
       await monitorAPI(apiConfigId, userAgent);
     }, interval); // Interval in milliseconds (5 minutes)
-    res.send("API monitoring started");
   } catch (error) {
     console.error("Failed to start API monitoring:", error);
     res.status(500).send("Error starting API monitoring");

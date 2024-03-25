@@ -5,5 +5,6 @@ const router = express.Router();
 const monitorController= require("../controllers/monitorController");
 
 router.get('/getResponseTime/:apiConfigId', monitorController.getRT);
+router.get('/getPaylodSize/:apiConfigId', monitorController.getPS);
 
 module.exports = router;

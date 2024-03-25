@@ -8,6 +8,11 @@ const SECRET_KEY = process.env.SECRET_KEY;
 const User = require("../models/userSchema");
 const { validateInputs } = require("../validators/user_details_validation");
 
+/** Signs up a new user with the provided data.
+ * @param {Object} req - The request object containing user data.
+ * @param {Object} res - The response object to send the result.
+ * @returns {Object} JSON with success, message, and user properties.
+ */
 const signup = async (req, res) => {
   try {
     const userData = req.body;
@@ -55,13 +60,18 @@ const signup = async (req, res) => {
   }
 };
 
+/**Logs in a user with the provided email and password.
+ * @param {Object} req - The request object containing email and password.
+ * @param {Object} res - The response object to send the result.
+ * @returns {Object} JSON with success, message, token, and user properties.
+ */
 const login = async (req, res) => {
   try {
     const userData = req.body;
     const email = userData.email;
     const password = userData.password;
 
-    // validate  inputs
+    // Validate user inputs
     const validationError = validateInputs(userData);
     if (validationError) {
       return res.status(400).json({
@@ -91,18 +101,16 @@ const login = async (req, res) => {
     }
 
     // If the password is valid, generate a JWT token
-    const token = jwt.sign(
-      { userId: user._id, email: user.email },
-      SECRET_KEY,
-      { expiresIn: process.env.TOKEN_EXPIRY }
-    );
+    const token = jwt.sign({ userId: user._id, email: user.email }, SECRET_KEY, {
+      expiresIn: process.env.TOKEN_EXPIRY,
+    });
 
     res.status(200).json({
       success: true,
       message: "Login successful!",
       token,
       user: {
-        eamil: user.email,
+        email: user.email,
       },
     });
   } catch (error) {
@@ -114,6 +122,11 @@ const login = async (req, res) => {
   }
 };
 
+/**Retrieves user information based on the provided decoded token.
+ * @param {Object} req - The request object containing decoded token.
+ * @param {Object} res - The response object to send the user information.
+ * @returns {Object} JSON with the user information.
+ */
 const info = async (req, res) => {
   try {
     const decodedToken = req.decoded;

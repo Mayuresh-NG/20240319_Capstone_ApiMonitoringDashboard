@@ -14,4 +14,9 @@ export class ChartDataService {
     const url = `${this.baseUrl}/getResponseTime/${apiConfigId}`;
     return this.http.get<number[]>(url);
   }
+
+  // fetchpayload(apiConfigId: string): Observable<number[]> {
+  //   const url = `${this.baseUrl}/getPaylodSize/${apiConfigId}`;
+  //   return this.http.get<number[]>(url);
+  // }
 }

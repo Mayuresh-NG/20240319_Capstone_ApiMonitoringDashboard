@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ApiService } from '../../CORE/services/api.service';
 import { SearchService } from '../../CORE/services/search.service';
 import { Subscription } from 'rxjs';
+import { MonitorService } from '../../CORE/services/monitor.service';
 
 @Component({
   selector: 'app-api-management',
@@ -9,6 +10,7 @@ import { Subscription } from 'rxjs';
   styleUrl: './api-management.component.css',
 })
 export class ApiManagementComponent implements OnInit, OnDestroy {
+  monitoringInProgress = false;
   filteredApis: Api[] = [];
   searchQuerySubscription = new Subscription();
 
@@ -29,8 +31,39 @@ export class ApiManagementComponent implements OnInit, OnDestroy {
 
   constructor(
     private apiService: ApiService,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private monitorService: MonitorService
   ) {}
+
+  toggleMonitoring(api: any, event: MouseEvent): void {
+    api.monitoringInProgress = !api.monitoringInProgress;
+    if (this.monitoringInProgress) {
+      // Stop monitoring
+      this.stopMonitoring(api, event);
+    } else {
+      // Start monitoring
+      this.startMonitoring(api, event);
+    }
+    // Toggle the monitoring status
+    this.monitoringInProgress = !this.monitoringInProgress;
+  }
+
+  stopMonitoring(api: any, event: MouseEvent): void {
+    const button = event.target as HTMLButtonElement;
+    button.classList.remove('monitoring-active');
+    console.log('stop monitoring clicked');
+    // Call the service to stop monitoring
+    // this.monitorService.stopMonitoring(api._id).subscribe(
+    //   () => {
+    //     // If the stop monitoring request is successful, clear the interval
+    //     clearInterval(this.monitoringIntervalId);
+    //     this.monitoringInProgress = false;
+    //   },
+    //   (error) => {
+    //     console.error('Error stopping monitoring:', error);
+    //   }
+    // );
+  }
 
   filterApis(query: string): void {
     if (!query) {
@@ -125,14 +158,29 @@ export class ApiManagementComponent implements OnInit, OnDestroy {
     api.editMode = false;
   }
 
-  startMonitoring(api: Api): void {
-    // Implement start monitoring functionality
+  startMonitoring(api: any, event: MouseEvent): void {
+    const button = event.target as HTMLButtonElement;
+    button.classList.add('monitoring-active');
+    this.monitorService
+      .startMonitoring(api._id, api.monitoringInterval)
+      .subscribe(
+        (response) => {
+          // Handle successful response
+          console.log('Monitoring started successfully:', response);
+          api.monitoringInProgress = true;
+        },
+        (error) => {
+          // Handle error
+          console.error('Error starting monitoring:', error);
+        }
+      );
   }
 }
 
 export class Api {
   editMode: boolean = false; // Add editMode property
   previousValues!: Partial<Api>; // Add previousValues property
+  monitoringInProgress: boolean = false;
 
   constructor(
     public name: string,
