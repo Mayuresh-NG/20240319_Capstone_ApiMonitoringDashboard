@@ -9,8 +9,10 @@ import Chart from 'chart.js/auto';
 })
 export class ResponseChartComponent implements OnChanges {
   @Input() selectedApiId: string = '';
-  chartData: any[] = [];
-  chart: any;
+  responseTimeData: any[] = [];
+  payloadSizeData: any[] = [];
+  responseChart: any;
+  payloadChart: any;
 
   constructor(private chartDataService: ChartDataService) {}
 
@@ -24,37 +26,64 @@ export class ResponseChartComponent implements OnChanges {
   fetchChartData(apiConfigId: string): void {
     this.chartDataService.fetchChartData(apiConfigId).subscribe(
       (data: number[]) => {
-        this.chartData = data;
-        this.updateChart(); // Update the chart when new data is fetched
+        this.responseTimeData = data;
+        this.updateResponseTimeChart();
       },
       (error) => {
-        console.error('Error fetching chart data:', error);
+        console.error('Error fetching response time data:', error);
+      }
+    );
+
+    this.chartDataService.fetchpayload(apiConfigId).subscribe(
+      (data: number[]) => {
+        this.payloadSizeData = data;
+        this.updatePayloadSizeChart();
+      },
+      (error) => {
+        console.error('Error fetching payload size data:', error);
       }
     );
   }
 
-  createChart(): void {
-    const canvas = document.getElementById(
-      'response-chart'
-    ) as HTMLCanvasElement;
+  createResponseTimeChart(): void {
+    const canvas = document.getElementById('response-chart') as HTMLCanvasElement;
     const ctx = canvas.getContext('2d');
 
     if (ctx) {
-      this.chart = new Chart(ctx, {
+      this.responseChart = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: this.generateLabels(), // Generate labels if needed
+          labels: this.generateLabels(this.responseTimeData.length),
           datasets: [
             {
               label: 'Response Time',
-              data: this.chartData,
-              borderColor: 'rgb(75, 192, 192)',
-              fill: false,
+              data: this.responseTimeData,
+              borderColor: 'rgb(255, 255, 255)',
+              fill: true,
+              hoverBackgroundColor : 'red',
             },
           ],
         },
         options: {
-          // Add options as needed
+          plugins: {
+            legend: {
+              labels: {
+                color: 'rgb(255, 255, 255)' // Set desired color (RGB format)
+              }
+            }
+          },
+          scales: {
+            x: {
+              ticks: {
+                color: 'white', // Change x-axis label color
+              },
+            },
+            y: {
+              ticks: {
+                color: 'white', // Change y-axis label color
+              },
+            },
+          },
         },
       });
     } else {
@@ -62,19 +91,71 @@ export class ResponseChartComponent implements OnChanges {
     }
   }
 
-  updateChart(): void {
-    if (this.chart) {
-      this.chart.data.datasets[0].data = this.chartData;
-      this.chart.update();
+  updateResponseTimeChart(): void {
+    if (this.responseChart) {
+      this.responseChart.data.datasets[0].data = this.responseTimeData;
+      this.responseChart.update();
     } else {
-      this.createChart();
+      this.createResponseTimeChart();
     }
   }
 
-  generateLabels(): string[] {
-    // Generate labels based on the length of chartData array
-    return Array.from({ length: this.chartData.length }, (_, i) =>
-      (i + 1).toString()
-    );
+  createPayloadSizeChart(): void {
+    const canvas = document.getElementById('payload-chart') as HTMLCanvasElement;
+    const ctx = canvas.getContext('2d');
+
+    if (ctx) {
+      this.payloadChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: this.generateLabels(this.payloadSizeData.length),
+          datasets: [
+            {
+              label: 'Payload Size',
+              data: this.payloadSizeData,
+              backgroundColor: 'rgba(75, 192, 192, 0.2)',
+              borderColor: 'rgba(75, 192, 192, 1)',
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          plugins: {
+            legend: {
+              labels: {
+                color: 'rgb(255, 255, 255)' // Set desired color (RGB format)
+              }
+            }
+          },
+          scales: {
+            x: {
+              ticks: {
+                color: 'white', // Change x-axis label color
+              },
+            },
+            y: {
+              ticks: {
+                color: 'white', // Change y-axis label color
+              },
+            },
+          },
+        },
+      });
+    } else {
+      console.error('Failed to get 2D rendering context for canvas element');
+    }
+  }
+
+  updatePayloadSizeChart(): void {
+    if (this.payloadChart) {
+      this.payloadChart.data.datasets[0].data = this.payloadSizeData;
+      this.payloadChart.update();
+    } else {
+      this.createPayloadSizeChart();
+    }
+  }
+
+  generateLabels(length: number): string[] {
+    return Array.from({ length: length }, (_, i) => (i + 1).toString());
   }
 }

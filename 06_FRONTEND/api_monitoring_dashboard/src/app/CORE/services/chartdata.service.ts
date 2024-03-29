@@ -15,8 +15,8 @@ export class ChartDataService {
     return this.http.get<number[]>(url);
   }
 
-  // fetchpayload(apiConfigId: string): Observable<number[]> {
-  //   const url = `${this.baseUrl}/getPaylodSize/${apiConfigId}`;
-  //   return this.http.get<number[]>(url);
-  // }
+  fetchpayload(apiConfigId: string): Observable<number[]> {
+    const url = `${this.baseUrl}/getPaylodSize/${apiConfigId}`;
+    return this.http.get<number[]>(url);
+  }
 }
