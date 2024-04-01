@@ -4,7 +4,7 @@ const MonitoringData = require("../models/monitoringDataSchema");
  * @param {Object} req - Request object containing the API configuration ID.
  * @param {Object} res - Response object to send the response times array.
  */
-const getRT =  async (req, res) => {
+const getRT = async (req, res) => {
   try {
     // Get the API configuration ID from the request parameters.
     const apiConfigId = req.params.apiConfigId;
@@ -16,7 +16,9 @@ const getRT =  async (req, res) => {
     // If no data is found for the provided API configuration ID,
     // return a 404 status code with an appropriate message.
     if (!data) {
-      return res.status(404).json({ error: "No data found for the provided API config ID" });
+      return res
+        .status(404)
+        .json({ error: "No data found for the provided API config ID" });
     }
 
     // Extract the response times array from the data.
@@ -37,19 +39,24 @@ const getRT =  async (req, res) => {
  * @param {Object} req - Request object containing the API configuration ID.
  * @param {Object} res - Response object to send the response payload sizes array.
  */
-const getPS =  async (req, res) => {
+const getPS = async (req, res) => {
   try {
     // Get the API configuration ID from the request parameters.
     const apiConfigId = req.params.apiConfigId;
 
     // Find the data with the specified API configuration ID,
     // and project only the resPayloadSize field.
-    const data = await MonitoringData.findOne({ apiConfigId }, "resPayloadSize");
+    const data = await MonitoringData.findOne(
+      { apiConfigId },
+      "resPayloadSize"
+    );
 
     // If no data is found for the provided API configuration ID,
     // return a 404 status code with an appropriate message.
     if (!data) {
-      return res.status(404).json({ error: "No data found for the provided API config ID" });
+      return res
+        .status(404)
+        .json({ error: "No data found for the provided API config ID" });
     }
 
     // Extract the response payload sizes array from the data.
@@ -66,6 +73,171 @@ const getPS =  async (req, res) => {
   }
 };
 
-module.exports ={
-    getRT,getPS
-}
+const throughput = async (req, res) => {
+  try {
+    // Get the API configuration ID from the request parameters.
+    const apiConfigId = req.params.apiConfigId;
+
+    // Find the data with the specified API configuration ID,
+    // and project only the resPayloadSize field.
+    const data = await MonitoringData.findOne({ apiConfigId }, "throughput");
+
+    // If no data is found for the provided API configuration ID,
+    // return a 404 status code with an appropriate message.
+    if (!data) {
+      return res
+        .status(404)
+        .json({ error: "No data found for the provided API config ID" });
+    }
+
+    // Extract the response payload sizes array from the data.
+    const throughput = data.throughput || [];
+
+    // Send the response payload sizes array as a JSON object.
+    res.json(throughput);
+  } catch (error) {
+    // Log any error that occurs when fetching response payload sizes.
+    console.error("Error fetching throughput:", error);
+
+    // Send a 500 status code with a generic error message.
+    res.status(500).json({ error: "Failed to fetch throughput" });
+  }
+};
+
+const reqCount = async (req, res) => {
+  try {
+    // Get the API configuration ID from the request parameters.
+    const apiConfigId = req.params.apiConfigId;
+
+    // Find the data with the specified API configuration ID,
+    // and project only the resPayloadSize field.
+    const data = await MonitoringData.findOne({ apiConfigId }, "requestCount");
+
+    // If no data is found for the provided API configuration ID,
+    // return a 404 status code with an appropriate message.
+    if (!data) {
+      return res
+        .status(404)
+        .json({ error: "No data found for the provided API config ID" });
+    }
+
+    // Extract the response payload sizes array from the data.
+    const requestCount = data.requestCount || [];
+
+    // Send the response payload sizes array as a JSON object.
+    res.json(requestCount);
+  } catch (error) {
+    // Log any error that occurs when fetching response payload sizes.
+    console.error("Error fetching requestCount:", error);
+
+    // Send a 500 status code with a generic error message.
+    res.status(500).json({ error: "Failed to fetch requestCount" });
+  }
+};
+
+const responseTimeStat = async (req, res) => {
+  try {
+    // Get the API configuration ID from the request parameters.
+    const apiConfigId = req.params.apiConfigId;
+
+    // Find the data with the specified API configuration ID,
+    // and project only the peakResponseTime and minResponseTime fields.
+    const data = await MonitoringData.findOne(
+      { apiConfigId },
+      "peakResponseTime minResponseTime"
+    );
+
+    // If no data is found for the provided API configuration ID,
+    // return a 404 status code with an appropriate message.
+    if (!data) {
+      return res
+        .status(404)
+        .json({ error: "No data found for the provided API config ID" });
+    }
+
+    // Extract the peakResponseTime and minResponseTime from the data.
+    const { peakResponseTime, minResponseTime } = data;
+
+    // Send the response with both peakResponseTime and minResponseTime.
+    res.json({ peakResponseTime, minResponseTime });
+  } catch (error) {
+    // Log any error that occurs when fetching response times.
+    console.error("Error fetching response times:", error);
+
+    // Send a 500 status code with a generic error message.
+    res.status(500).json({ error: "Failed to fetch response times" });
+  }
+};
+
+const averageStats = async (req, res) => {
+  try {
+    // Get the API configuration ID from the request parameters.
+    const apiConfigId = req.params.apiConfigId;
+
+    // Find the data with the specified API configuration ID,
+    // and project only the required fields.
+    const data = await MonitoringData.findOne(
+      { apiConfigId },
+      "averagePayloadSize averageResponseTime"
+    );
+
+    // If no data is found for the provided API configuration ID,
+    // return a 404 status code with an appropriate message.
+    if (!data) {
+      return res
+        .status(404)
+        .json({ error: "No data found for the provided API config ID" });
+    }
+
+    // Extract the required fields from the data.
+    const { averagePayloadSize, averageResponseTime } = data;
+
+    // Send the response with both average payload size and average response time.
+    res.json({ averagePayloadSize, averageResponseTime });
+  } catch (error) {
+    // Log any error that occurs when fetching the data.
+    console.error("Error fetching average stats:", error);
+
+    // Send a 500 status code with a generic error message.
+    res.status(500).json({ error: "Failed to fetch average stats" });
+  }
+};
+
+const p95AndP99ResponseTime = async (req, res) => {
+  try {
+    // Get the API configuration ID from the request parameters.
+    const apiConfigId = req.params.apiConfigId;
+
+    // Find the data with the specified API configuration ID.
+    const data = await MonitoringData.findOne({ apiConfigId });
+
+    // If no data is found for the provided API configuration ID,
+    // return a 404 status code with an appropriate message.
+    if (!data) {
+      return res.status(404).json({ error: "No data found for the provided API config ID" });
+    }
+
+    // Extract the p95 and p99 response times from the data.
+    const p95ResponseTime = data.p95ResponseTime || [];
+    const p99ResponseTime = data.p99ResponseTime || [];
+
+    // Send the response as a JSON object containing both p95 and p99 response times.
+    res.json({ p95ResponseTime, p99ResponseTime });
+  } catch (error) {
+    // Log any error that occurs when fetching response times.
+    console.error("Error fetching p95 and p99 Response Times:", error);
+
+    // Send a 500 status code with a generic error message.
+    res.status(500).json({ error: "Failed to fetch p95 and p99 Response Times" });
+  }
+};
+
+module.exports = {
+  getRT,
+  getPS,
+  throughput,
+  reqCount,
+  responseTimeStat,
+  averageStats,
+  p95AndP99ResponseTime
+};

@@ -54,7 +54,7 @@ const monitorAPI = async (apiConfigId, userAgent) => {
 
     const endTime = Date.now();
     const responseTime = endTime - startTime;
-    const reqPayloadSize = 0; 
+    const reqPayloadSize = 0;
     const resPayloadSize = JSON.stringify(response?.data)?.length || 0;
 
     // Update arrays with new data
@@ -101,22 +101,36 @@ const calculatePercentile = (arr, percentile) => {
   return sortedArr[index - 1];
 };
 
+let intervalId;
+
 // Example endpoint to trigger monitoring of a specific API
 app.post("/monitor-api/:apiConfigId/", async (req, res) => {
   try {
     const apiConfigId = req.params.apiConfigId;
     const userAgent = req.headers["user-agent"];
     const interval = parseInt(req.headers["monitoring-interval"]);
-    console.log(interval)
+    console.log(interval);
     // Trigger API monitoring immediately
     await monitorAPI(apiConfigId, userAgent);
     // Set interval to trigger API monitoring every 5 minutes (adjust interval as needed)
-    setInterval(async () => {
+    intervalId = setInterval(async () => {
       await monitorAPI(apiConfigId, userAgent);
     }, interval); // Interval in milliseconds (5 minutes)
   } catch (error) {
     console.error("Failed to start API monitoring:", error);
     res.status(500).send("Error starting API monitoring");
+  }
+});
+
+app.post("/stop-monitoring", (req, res) => {
+  try {
+    // Clear the interval using the interval ID
+    clearInterval(intervalId);
+    console.log("API monitoring stopped")
+    res.status(200).send("API monitoring stopped successfully");
+  } catch (error) {
+    console.error("Failed to stop API monitoring:", error);
+    res.status(500).send("Error stopping API monitoring");
   }
 });
 

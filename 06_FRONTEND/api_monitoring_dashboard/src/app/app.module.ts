@@ -21,6 +21,8 @@ import { DashboardDataComponent } from './COMPONENTS/dashboard-data/dashboard-da
 import { OverlayModule } from '@angular/cdk/overlay';
 import { MatSelectModule } from '@angular/material/select';
 import { ResponseChartComponent } from './COMPONENTS/response-chart/response-chart.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { DashbaordChartsComponent } from './COMPONENTS/dashbaord-charts/dashbaord-charts.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { ResponseChartComponent } from './COMPONENTS/response-chart/response-cha
     AnalyticsComponent,
     AlertsComponent,
     DashboardDataComponent,
-    ResponseChartComponent
+    ResponseChartComponent,
+    DashbaordChartsComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +49,7 @@ import { ResponseChartComponent } from './COMPONENTS/response-chart/response-cha
     MatMenuModule,
     MatIconModule,
     OverlayModule,
-    MatSelectModule
+    MatSelectModule,MatProgressBarModule
   ],
   providers: [],
   bootstrap: [AppComponent],

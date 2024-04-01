@@ -6,18 +6,19 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class MonitorService {
-  private baseUrl = 'http://localhost:8000/monitor-api'; 
+  private baseUrl = 'http://localhost:8000'; 
 
   constructor(private http: HttpClient) { }
 
   startMonitoring(apiId: string, monitoringInterval: number): Observable<any> {
-    const url = `${this.baseUrl}/${apiId}`;
+    const url = `${this.baseUrl}/monitor-api/${apiId}`;
     const headers = new HttpHeaders().set('Monitoring-Interval', monitoringInterval.toString());
     return this.http.post<any>(url, null,{ headers}); 
   }
 
-//   stopMonitoring(apiId:string): Observable<any> {
-//     const url = `${this.baseUrl}/${apiId}/stop`;
-//     return this.http.post<any>(url, null);
-//   }
+  stopMonitoring(): Observable<any> {
+    const url = `${this.baseUrl}/stop-monitoring`;
+    return this.http.post<any>(url,{});
+  }
+  
 }

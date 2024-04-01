@@ -3,6 +3,7 @@ import { SignupService } from '../../CORE/services/auth.service';
 import { Router } from '@angular/router';
 import { SearchService } from '../../CORE/services/search.service';
 import { RouterOutlet } from '@angular/router';
+import { ApiService } from '../../CORE/services/api.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,7 +16,8 @@ export class DashboardComponent {
   constructor(
     private signupService: SignupService,
     private router: Router,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private apiService: ApiService
   ) {}
 
   onSearchInputChange(event: any): void {

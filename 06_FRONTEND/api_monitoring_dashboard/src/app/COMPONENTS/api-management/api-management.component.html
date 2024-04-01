@@ -38,10 +38,10 @@
     </div>
     <button
       *ngIf="!api.editMode"
-      (click)="toggleMonitoring(api,$event)"
+      (click)="toggleMonitoring(api, $event)"
       class="start-button"
     >
-    {{ api.monitoringInProgress ? 'Stop Monitoring' : 'Start Monitoring' }}
+      {{ api.monitoringInProgress ? "Stop Monitoring" : "Start Monitoring" }}
     </button>
   </div>
 </div>

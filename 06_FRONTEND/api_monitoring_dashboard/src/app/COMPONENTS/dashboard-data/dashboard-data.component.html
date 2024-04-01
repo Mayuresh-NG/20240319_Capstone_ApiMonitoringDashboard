@@ -1,18 +1,12 @@
-<div class="card-container">
-<div class="card">
-  <div class="card-header">Throughput</div>
-  <div class="chart"></div>
-</div>
-<div class="card">
-  <div class="card-header">Response Time</div>
-  <div class="summary"></div>
-</div>
-<div class="card">
-  <div class="card-header">Availability</div>
-  <div class="chart"></div>
-</div>
-<div class="card">
-  <div class="card-header">Error Rate</div>
-  <div class="summary"></div>
-</div>
+<div class="container">
+  <div class="dropdown-container">
+    <label class="lable">Select API</label>
+    <select (change)="onApiSelect($event)">
+      <option *ngFor="let api of apis" [value]="api._id">{{ api.name }}</option>
+    </select>
+  </div>
+
+  <div class="charts-container">
+    <app-dashbaord-charts [selectedApiId]="selectedApiId"></app-dashbaord-charts>
+  </div>
 </div>

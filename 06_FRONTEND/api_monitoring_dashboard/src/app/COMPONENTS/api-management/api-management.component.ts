@@ -53,16 +53,14 @@ export class ApiManagementComponent implements OnInit, OnDestroy {
     button.classList.remove('monitoring-active');
     console.log('stop monitoring clicked');
     // Call the service to stop monitoring
-    // this.monitorService.stopMonitoring(api._id).subscribe(
-    //   () => {
-    //     // If the stop monitoring request is successful, clear the interval
-    //     clearInterval(this.monitoringIntervalId);
-    //     this.monitoringInProgress = false;
-    //   },
-    //   (error) => {
-    //     console.error('Error stopping monitoring:', error);
-    //   }
-    // );
+    this.monitorService.stopMonitoring().subscribe(
+      () => {
+        this.monitoringInProgress = false;
+      },
+      (error) => {
+        console.error('Error stopping monitoring:', error);
+      }
+    );
   }
 
   filterApis(query: string): void {

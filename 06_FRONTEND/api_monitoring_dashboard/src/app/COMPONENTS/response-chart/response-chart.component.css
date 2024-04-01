@@ -21,3 +21,14 @@
   margin-top: 10px; /* Adjusted for navbar height */
   margin-left: 20px;
 }
+
+.reqcard {
+  width:42%; 
+  min-height: 200px;
+  margin: 10px;
+  padding: 20px;
+  background-color: #3a5a40;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  max-height: auto;
+}
