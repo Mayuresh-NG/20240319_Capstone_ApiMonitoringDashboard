@@ -219,3 +219,22 @@ body {
   color: #dad7cd;
   font-weight: bold;
 }
+
+@media screen and (max-width: 776px) {
+  .search-bar-container {
+    display: none;
+  }
+  .sidebar {
+    width: 100px;
+    display: flex;
+    left: 0;
+    top: 0;
+    border-radius: 0;
+    height: auto;
+  }
+  .sidebar-item {
+    font-size: 8px;
+    padding: 10px;
+    margin-left: 20px;
+  }
+}

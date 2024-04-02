@@ -233,4 +233,29 @@ export class ResponseChartComponent implements OnChanges {
   generateLabels(length: number): string[] {
     return Array.from({ length: length }, (_, i) => (i + 1).toString());
   }
+
+  tooltipText: string = '';
+  informationText: string = '';
+  isTooltipVisible: boolean = false;
+
+  showTooltip(text: string): void {
+    if (text === 'Throughput') {
+      this.informationText =
+        'Throughput is typically measured in terms of requests per second (RPS) or requests per minute (RPM). This metric gives insights into the performance and capacity of the API to handle incoming requests.';
+      this.isTooltipVisible = true;
+    }
+    else if (text === 'Response Payload Size') {
+      this.informationText =
+        ' Payload size is typically measured in bytes or kilobytes (KB). It includes the size of the data being sentfrom the server to the client (response payload). This tool track the size of each response payload to analyze data transfer patterns.';
+      this.isTooltipVisible = true;
+    }
+    else if (text === 'Response Time') {
+      this.informationText =
+        'Response time is typically measured in milliseconds (ms). It encompasses various stages of the API request-response lifecycle, including network latency, server processing time, and data transmission time. Monitoring tools capture response time metrics for individual API calls to assess performance and identify bottlenecks.';
+      this.isTooltipVisible = true;
+    }}
+
+    hideTooltip(): void {
+      this.isTooltipVisible = false;
+    }
 }

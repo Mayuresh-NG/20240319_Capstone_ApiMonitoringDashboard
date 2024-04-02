@@ -32,3 +32,35 @@
   border-radius: 15px;
   max-height: auto;
 }
+
+.tooltip {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: black;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 15px;
+  z-index: 999;
+  display: none;
+  width:515px;
+  font-weight: bold;
+  font-family: Karla;
+  transition: opacity 0.3s ease-in-out;
+  opacity: 0;
+}
+
+.tooltip:before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -10px;
+  border-width: 10px;
+  border-style: solid;
+  border:none;
+}
+
+.card:hover .tooltip {
+  display: block;
+  opacity: 1;
+}
