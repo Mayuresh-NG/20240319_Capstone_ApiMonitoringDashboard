@@ -28,4 +28,5 @@ const monitoringDataSchema = new mongoose.Schema({
 });
 
 const MonitoringData = mongoose.model("MonitoringData", monitoringDataSchema);
+
 module.exports = MonitoringData;

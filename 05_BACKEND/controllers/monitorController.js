@@ -1,6 +1,7 @@
+// Schema
 const MonitoringData = require("../models/monitoringDataSchema");
 
-/** Retrieves an array of response times for the API configuration ID.
+/**Retrieves an array of response times for the API configuration ID.
  * @param {Object} req - Request object containing the API configuration ID.
  * @param {Object} res - Response object to send the response times array.
  */
@@ -73,6 +74,15 @@ const getPS = async (req, res) => {
   }
 };
 
+/**Retrieves an array of throughput values for the API configuration ID.
+ * @param {Object} req - Request object containing the API configuration ID.
+ * @param {Object} res - Response object to send the throughput values array.
+ *
+ * This API retrieves an array of throughput values for a given API configuration ID. 
+ * If the API configuration ID is not found, it returns a 404 status code
+ * with a message "No data found for the provided API config ID".
+ *
+ */
 const throughput = async (req, res) => {
   try {
     // Get the API configuration ID from the request parameters.
@@ -104,6 +114,14 @@ const throughput = async (req, res) => {
   }
 };
 
+/**Retrieves an array of request count values for the API configuration ID.
+ * @param {Object} req - Request object containing the API configuration ID.
+ * @param {Object} res - Response object to send the request count values array.
+ *
+ * This API retrieves an array of request count values for a given API configuration ID. 
+ * If the API configuration ID is not found, it returns a 404 status code
+ * with a message "No data found for the provided API config ID".
+ */
 const reqCount = async (req, res) => {
   try {
     // Get the API configuration ID from the request parameters.
@@ -135,6 +153,15 @@ const reqCount = async (req, res) => {
   }
 };
 
+/**Retrieves the peak and minimum response times for the provided API configuration ID.
+ * @param {Object} req - Request object containing the API configuration ID.
+ * @param {Object} res - Response object to send the response times as an object.
+ *
+ * This API retrieves the peak and minimum response times for the given API configuration ID. 
+ * If the API configuration ID is not found, it returns a 404 status code
+ * with a message "No data found for the provided API config ID".
+ *
+ */
 const responseTimeStat = async (req, res) => {
   try {
     // Get the API configuration ID from the request parameters.
@@ -169,6 +196,14 @@ const responseTimeStat = async (req, res) => {
   }
 };
 
+/**Retrieves the average payload size and response time for the provided API configuration ID.
+ * @param {Object} req - Request object containing the API configuration ID.
+ * @param {Object} res - Response object to send the average stats as an object.
+ *
+ * This API retrieves the average payload size and response time for the provided API configuration ID. 
+ * If the API configuration ID is not found, it returns a 404 status code
+ * with a message "No data found for the provided API config ID".
+ */
 const averageStats = async (req, res) => {
   try {
     // Get the API configuration ID from the request parameters.
@@ -203,6 +238,14 @@ const averageStats = async (req, res) => {
   }
 };
 
+/**Retrieves p95 and p99 response times for the provided API configuration ID.
+ * @param {Object} req - Request object containing API configuration ID.
+ * @param {Object} res - Response object to send the p95 and p99 response times.
+ *
+ * This API retrieves p95 and p99 response times for the provided API configuration ID. 
+ * If the API configuration ID is not found, it returns a 404 status code
+ * with a message "No data found for the provided API config ID".
+ */
 const p95AndP99ResponseTime = async (req, res) => {
   try {
     // Get the API configuration ID from the request parameters.

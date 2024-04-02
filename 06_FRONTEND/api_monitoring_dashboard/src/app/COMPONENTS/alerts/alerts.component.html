@@ -1,3 +1,16 @@
 <div class="container">
-  <h2 style="color: white;margin-left: 11px;">Alerts</h2>
+  <h2 style="color: white; margin-left: 11px">Alerts</h2>
+</div>
+
+<div class="container">
+  <div class="dropdown-container">
+    <label class="label" style="color: white;font-weight: bold;font-family: Karla;font-size: medium;">Select API</label>
+    <select (change)="onApiSelect($event)">
+      <option *ngFor="let api of apis" [value]="api._id">{{ api.name }}</option>
+    </select>
+  </div>
+
+  <div class="charts-container">
+    <app-alert-data [selectedApiId]="selectedApiId"></app-alert-data>
+  </div>
 </div>

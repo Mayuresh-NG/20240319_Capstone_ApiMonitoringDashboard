@@ -9,14 +9,14 @@ const apiConfigSchema = new mongoose.Schema({
   apiUrl: { type: String, required: true },
   apiKey: { type: String },
   name: { type: String, required: true },
-  monitoringInterval: { type: Number, default: 30000 }, // in milliseconds
+  monitoringInterval: { type: Number, default: 30000 },
   alertThresholds: {
-    responseTime: { type: Number }, // in milliseconds
-    errorRate: { type: Number }, // percentage
+    responseTime: { type: Number }, 
+    errorRate: { type: Number }, 
   },
-  // Additional configuration options as needed
   createdAt: { type: Date, default: Date.now },
 });
 
 const apiConfig = mongoose.model("APIConfig", apiConfigSchema);
+
 module.exports = apiConfig;

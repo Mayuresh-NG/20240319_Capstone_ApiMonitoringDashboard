@@ -5,3 +5,32 @@
     margin-left: 20px;
   }
   
+  .dropdown-container {
+    position: relative;
+    display: inline-block;
+    margin-left:11px ;
+  }
+  
+  .dropdown-container select {
+    padding: 8px 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+  }
+  
+  .dropdown-container select:focus {
+    outline: none;
+    border-color: #3a5a40;
+  }
+  
+  .dropdown-container label {
+    margin-right: 8px;
+  }
+  
+  .lable {
+    color: white;
+    font-weight: bold;
+  }
+  

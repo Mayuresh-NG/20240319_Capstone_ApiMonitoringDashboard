@@ -2,7 +2,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-
 // internal imports
 const SECRET_KEY = process.env.SECRET_KEY;
 const User = require("../models/userSchema");

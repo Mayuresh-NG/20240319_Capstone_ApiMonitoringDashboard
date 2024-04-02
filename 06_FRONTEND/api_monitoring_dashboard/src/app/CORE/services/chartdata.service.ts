@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +15,15 @@ export class ChartDataService {
     return this.http.get<number[]>(url);
   }
 
+  checkResponseTimes(apiConfigId: string, desiredThreshold: number): Observable<boolean> {
+    return this.fetchChartData(apiConfigId).pipe(
+      map(responseTimes => {
+        const exceedThreshold = responseTimes.some(time => time > desiredThreshold);
+        return exceedThreshold;
+      })
+    );
+  }
+  
   fetchpayload(apiConfigId: string): Observable<number[]> {
     const url = `${this.baseUrl}/getPaylodSize/${apiConfigId}`;
     return this.http.get<number[]>(url);

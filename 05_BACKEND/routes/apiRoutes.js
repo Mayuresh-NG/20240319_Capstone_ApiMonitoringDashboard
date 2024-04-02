@@ -1,3 +1,4 @@
+// External imports
 const express = require('express');
 const router = express.Router();
 
@@ -5,7 +6,7 @@ const router = express.Router();
 const apiController = require("../controllers/apiController");
 const { verifyToken } = require('../middlewares/auth');
 
-
+router.post('/alerts', apiController.createAlert);
 
 router.use(verifyToken)
 router.post('/config', apiController.config);

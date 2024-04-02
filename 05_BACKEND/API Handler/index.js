@@ -1,23 +1,38 @@
+// exteranl imports
 const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+
+// Schemas
 const MonitoringData = require("../models/monitoringDataSchema");
 const APIConfig = require("../models/apiConfigSchema");
+const Alert = require("../models/alertSchema");
 
+// controller import
+const { sendAlert } = require("../controllers/apiController");
+
+// start the app
 const app = express();
-const PORT = process.env.PORT || 8000;
 
+// connecting to mongodb asynchronously
+const connectToMongoDB = async () => {
+  try {
+    await mongoose.connect(
+      "mongodb+srv://mayureshngorantiwar:XkHynoxmktHsKefm@cluster0.qezkejq.mongodb.net/API_MONITORING"
+    );
+    console.log("Connected to MongoDB");
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error);
+    process.exit(1); // Exit the process if unable to connect
+  }
+};
+
+// middlewares
+app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors());
-
-const mongoose = require("mongoose");
-const mongoURI =
-  "mongodb+srv://mayureshngorantiwar:XkHynoxmktHsKefm@cluster0.qezkejq.mongodb.net/API_MONITORING";
-
-mongoose
-  .connect(mongoURI)
-  .then(() => console.log("MongoDB connection established"))
-  .catch((err) => console.error("MongoDB connection error:", err));
 
 // Function to monitor the API
 const monitorAPI = async (apiConfigId, userAgent) => {
@@ -59,7 +74,17 @@ const monitorAPI = async (apiConfigId, userAgent) => {
 
     // Update arrays with new data
     mdc.timestamp.push(new Date());
-    mdc.responseTime.push(responseTime);
+
+    const { condition: alertresponseTime } =
+      (await Alert.findOne({ apiConfigId })) || {};
+    console.log(alertresponseTime);
+
+    if (responseTime > alertresponseTime) {
+      mdc.responseTime.push(responseTime);
+      const message = `Response time exceeded threshold: ${responseTime} ms`;
+      sendAlert("+918999145269", message);
+    } else mdc.responseTime.push(responseTime);
+
     mdc.status.push(response ? response.status : "Error");
     mdc.errorMessage.push(errorMessage);
     mdc.reqPayloadSize.push(reqPayloadSize);
@@ -126,7 +151,7 @@ app.post("/stop-monitoring", (req, res) => {
   try {
     // Clear the interval using the interval ID
     clearInterval(intervalId);
-    console.log("API monitoring stopped")
+    console.log("API monitoring stopped");
     res.status(200).send("API monitoring stopped successfully");
   } catch (error) {
     console.error("Failed to stop API monitoring:", error);
@@ -134,4 +159,12 @@ app.post("/stop-monitoring", (req, res) => {
   }
 });
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const startServer = async () => {
+  const port = 8000;
+  app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+  });
+};
+
+// Call the asynchronous functions
+connectToMongoDB().then(startServer);

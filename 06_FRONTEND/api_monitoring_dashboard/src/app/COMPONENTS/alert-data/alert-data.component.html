@@ -1,0 +1,29 @@
+<div class="alert-form">
+  <label
+    for="condition"
+    style="
+      color: white;
+      font-weight: bold;
+      font-family: Karla;
+      font-size: medium;
+    "
+    >Response Time</label
+  >
+  <input
+    type="text"
+    id="condition"
+    name="condition"
+    [(ngModel)]="condition"
+    required
+  /><label
+    style="
+      color: white;
+      font-weight: bold;
+      font-family: Karla;
+      font-size: medium;
+    "
+    >ms</label
+  >
+
+  <button (click)="onSubmit()">Create Alert</button>
+</div>

@@ -9,7 +9,7 @@ import { LandingPageComponent } from './PAGES/landing-page/landing-page.componen
 import { LoginPopupComponent } from './COMPONENTS/login-popup/login-popup.component';
 import { SignupPopupComponent } from './COMPONENTS/signup-popup/signup-popup.component';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
@@ -23,6 +23,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { ResponseChartComponent } from './COMPONENTS/response-chart/response-chart.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { DashbaordChartsComponent } from './COMPONENTS/dashbaord-charts/dashbaord-charts.component';
+import { AlertDataComponent } from './COMPONENTS/alert-data/alert-data.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { DashbaordChartsComponent } from './COMPONENTS/dashbaord-charts/dashbaor
     AlertsComponent,
     DashboardDataComponent,
     ResponseChartComponent,
-    DashbaordChartsComponent
+    DashbaordChartsComponent,
+    AlertDataComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +51,7 @@ import { DashbaordChartsComponent } from './COMPONENTS/dashbaord-charts/dashbaor
     MatMenuModule,
     MatIconModule,
     OverlayModule,
-    MatSelectModule,MatProgressBarModule
+    MatSelectModule,MatProgressBarModule,ReactiveFormsModule 
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,5 +1,13 @@
 // internal imports
 const apiConfig = require("../models/apiConfigSchema");
+const Alert = require("../models/alertSchema");
+
+// Required libraries for sending alerts
+const twilio = require("twilio");
+const { accountSid, authToken, twilioNumber } = require("../utils/twilio");
+
+// Used by SendAlert api to access twillio authorization details 
+const client = twilio(accountSid, authToken);
 
 /**Handles the configuration of a new API.
  * @param {import('express').Request} req - The request object containing the API configuration data.
@@ -122,9 +130,54 @@ const deleteapi = async (req, res) => {
   }
 };
 
+/**Sends an alert message to the specified phone number.
+ * @param {string} phoneNumber - The phone number to send the alert message to.
+ * @param {string} message - The alert message to send.
+ *
+ * This function:
+ *  1. Calls the Twilio API to send an SMS message to the provided phone number.
+ *  2. Logs the message id on success.
+ *  3. Logs an error on failure.
+ */
+const sendAlert = (phoneNumber, message) => {
+  client.messages
+    .create({
+      body: message,
+      to: phoneNumber,
+      from: twilioNumber,
+    })
+    .then((message) =>
+      console.log("Alert message sent successfully:", message.sid)
+    )
+    .catch((error) => console.error("Error sending alert message:", error));
+};
+
+/**Creates a new alert with the provided API configuration ID and condition.
+ * @param {Object} req - The request object containing the API configuration ID and condition.
+ * @param {Object} res - The response object to send the created alert.
+ *
+ * This function:
+ *  1. Creates a new alert instance using the incoming request data.
+ *  2. Saves the new alert to the database.
+ *  3. Returns the created alert as a JSON object.
+ */
+const createAlert = async (req, res) => {
+  try {
+    const { apiConfigId, condition } = req.body;
+    const newAlert = new Alert({ apiConfigId, condition });
+    const savedAlert = await newAlert.save();
+    res.json(savedAlert);
+  } catch (error) {
+    console.error("Error creating alert:", error);
+    res.status(500).json({ error: "Failed to create alert" });
+  }
+};
+
 module.exports = {
   config,
   loadapi,
   updatapi,
   deleteapi,
+  sendAlert,
+  createAlert,
 };

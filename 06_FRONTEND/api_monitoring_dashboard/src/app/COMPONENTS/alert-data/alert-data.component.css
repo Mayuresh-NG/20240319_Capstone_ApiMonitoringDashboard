@@ -1,0 +1,36 @@
+.alert-form {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  
+  .alert-form label {
+    margin-left: 10px;
+    margin-top: 7px;
+  }
+  
+  .alert-form input {
+    width: 200px;
+    padding: 10px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-left: 10px;
+  }
+  
+  .alert-form button {
+    padding: 10px;
+    background-color: #ef233c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: 10px;
+    font-size: medium;
+  }
+  
+  .alert-form button:hover {
+    background-color: #d90429;
+  }
+  
