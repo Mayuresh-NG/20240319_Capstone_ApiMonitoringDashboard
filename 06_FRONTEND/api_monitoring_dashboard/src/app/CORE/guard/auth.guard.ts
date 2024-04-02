@@ -3,7 +3,7 @@ import { CanActivate, Router } from '@angular/router';
 import { SignupService } from '../services/auth.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
   constructor(private signupService: SignupService, private router: Router) {}
@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate {
       return true;
     } else {
       console.log('User not logged in. Redirecting to landing page.');
-      this.router.navigate(['/landing']); 
+      this.router.navigate(['/landing']);
       return false;
     }
   }

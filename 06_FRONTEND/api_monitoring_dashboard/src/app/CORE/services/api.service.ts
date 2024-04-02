@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class ApiService {
   token: any;
-  private apiUrl = 'http://localhost:3000/api'; // Adjust the URL as needed
+  private apiUrl = 'http://localhost:3000/api';
 
   constructor(private http: HttpClient) {}
 
@@ -41,7 +41,9 @@ export class ApiService {
     const headers = new HttpHeaders().set('Authorization', this.token);
 
     // Send the request with headers
-    return this.http.put<any>(`${this.apiUrl}/update/${apiId}`, updateData, { headers });
+    return this.http.put<any>(`${this.apiUrl}/update/${apiId}`, updateData, {
+      headers,
+    });
   }
 
   deleteApi(apiId: string): Observable<any> {

@@ -6,7 +6,7 @@ import { Observable, map } from 'rxjs';
   providedIn: 'root',
 })
 export class ChartDataService {
-  private baseUrl = 'http://localhost:3000/monitor-data/'; 
+  private baseUrl = 'http://localhost:3000/monitor-data/';
 
   constructor(private http: HttpClient) {}
 
@@ -15,15 +15,20 @@ export class ChartDataService {
     return this.http.get<number[]>(url);
   }
 
-  checkResponseTimes(apiConfigId: string, desiredThreshold: number): Observable<boolean> {
+  checkResponseTimes(
+    apiConfigId: string,
+    desiredThreshold: number
+  ): Observable<boolean> {
     return this.fetchChartData(apiConfigId).pipe(
-      map(responseTimes => {
-        const exceedThreshold = responseTimes.some(time => time > desiredThreshold);
+      map((responseTimes) => {
+        const exceedThreshold = responseTimes.some(
+          (time) => time > desiredThreshold
+        );
         return exceedThreshold;
       })
     );
   }
-  
+
   fetchpayload(apiConfigId: string): Observable<number[]> {
     const url = `${this.baseUrl}/getPaylodSize/${apiConfigId}`;
     return this.http.get<number[]>(url);
@@ -39,9 +44,13 @@ export class ChartDataService {
     return this.http.get<number>(url);
   }
 
-  fetchResponseTimeStat(apiConfigId: string): Observable<{ peakResponseTime: number, minResponseTime: number }> {
+  fetchResponseTimeStat(
+    apiConfigId: string
+  ): Observable<{ peakResponseTime: number; minResponseTime: number }> {
     const url = `${this.baseUrl}/responseTimeStat/${apiConfigId}`;
-    return this.http.get<{ peakResponseTime: number, minResponseTime: number }>(url);
+    return this.http.get<{ peakResponseTime: number; minResponseTime: number }>(
+      url
+    );
   }
 
   fetchAverageStats(apiConfigId: string): Observable<any> {

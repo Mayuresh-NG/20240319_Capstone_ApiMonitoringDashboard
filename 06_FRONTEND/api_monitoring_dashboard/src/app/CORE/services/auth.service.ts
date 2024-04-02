@@ -8,7 +8,7 @@ import { NavigationExtras, Router } from '@angular/router';
   providedIn: 'root',
 })
 export class SignupService {
-  private baseUrl = 'http://localhost:3000/users'; // Update this with your backend API URL
+  private baseUrl = 'http://localhost:3000/users';
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -41,7 +41,7 @@ export class SignupService {
     // Check if token exists in local storage
     return !!this.getToken();
   }
-  
+
   getUserInfo(): Observable<any> {
     // Assuming your API endpoint for user information is '/info'
     const headers = new HttpHeaders({
