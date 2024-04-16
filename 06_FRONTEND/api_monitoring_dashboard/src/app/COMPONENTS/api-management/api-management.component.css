@@ -1,8 +1,8 @@
 .container {
   display: flex;
   flex-wrap: wrap;
-  margin-top: 10px; /* Adjusted for navbar height */
-  margin-left: 20px;
+  margin-top: 30px; /* Adjusted for navbar height */
+  margin-left: 50px;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -112,6 +112,78 @@
 }
 
 .monitoring-active {
+  background-color: red;
+  color: white;
+}
+
+.edit-mode-inputs input {
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 80%;
+}
+
+.edit-mode-inputs input[type="number"] {
+  width: 100px; /* Adjust width as needed */
+}
+
+.edit-mode-inputs input:focus {
+  outline: none;
+  border-color: #007bff; /* Change border color on focus */
+}
+
+.save-button,
+.cancel-button {
+  padding: 8px 16px;
+  margin-top: 100px;
+  z-index: 1000;
+  background-color: gray; /* Green background */
+  color: white; /* White text */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.save-button:hover,
+.cancel-button:hover {
+  background-color:rgb(58,90,64); 
+}
+
+.theme-light .start-button  {
+  background-color: #BBFE78;
+  color: black;
+  font-weight: bold;
+}
+
+.theme-light .api-card{
+  background-color: #31363F;
+  border: none;
+}
+
+.theme-light .api-card h3 {
+  color:white;
+}
+
+.theme-light .api-card p {
+  color:gray;
+}
+
+.theme-light .delete-button {
+  color:#76ABAE;
+}
+
+
+.theme-light .edit-button {
+  color:#BBFE78;
+}
+
+.theme-light .add-button{
+  background-color: #76ABAE;
+  color: black;
+}
+
+.theme-light  .start-button:hover{
   background-color: red;
   color: white;
 }

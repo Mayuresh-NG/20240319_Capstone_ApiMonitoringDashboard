@@ -5,6 +5,9 @@ import { SignupPopupComponent } from '../signup-popup/signup-popup.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { SignupService } from '../../CORE/services/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-login-popup',
@@ -12,37 +15,39 @@ import { SignupService } from '../../CORE/services/auth.service';
   styleUrls: ['./login-popup.component.css'],
 })
 export class LoginPopupComponent {
-  showAlert:any 
+  showAlert: any;
+  showAlerts: any;
   constructor(
-    public dialogRef: MatDialogRef<LoginPopupComponent>, // Inject MatDialogRef for dialog functionality
-    @Inject(MAT_DIALOG_DATA) public data: any, // Inject MAT_DIALOG_DATA for passing data to the dialog
+    public dialogRef: MatDialogRef<LoginPopupComponent>, 
+    @Inject(MAT_DIALOG_DATA) public data: any,
     public dialog: MatDialog,
     private router: Router,
-    private signupService : SignupService
+    private signupService: SignupService,
+    private snackBar: MatSnackBar
   ) {}
 
   // Close the dialog
   closePopup(): void {
-    this.dialogRef.close(); 
+    this.dialogRef.close();
   }
 
   openPopup(): void {
     // Close the current dialog
-    this.closePopup(); 
+    this.closePopup();
     // Open the SignupPopupComponent dialog
     const dialogRef = this.dialog.open(SignupPopupComponent, {
-      width: '300px', 
+      width: '300px',
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       // Log when the popup is closed
-      console.log('The popup was closed'); 
+      console.log('The popup was closed');
     });
   }
 
   navigateToForgotPassword() {
     this.router.navigate(['/forgotpassword']);
-    this.closePopup()
+    this.closePopup();
   }
 
   email: string = ''; // Initialize username variable
@@ -60,24 +65,38 @@ export class LoginPopupComponent {
       email: this.email,
       password: this.password,
     };
-
+  
     this.signupService.loginUser(userData).subscribe(
       (response) => {
-        // Handle successful signup
-        console.log('login successful!', response);
-        this.showAlert = true;
-        setTimeout(() => {
-          this.showAlert = false;
-        }, 3000); // Hide t
-        this.router.navigate(["/dashboard"]);
-        this.closePopup(); 
+        // Handle successful login
+        console.log('Login successful!', response);
+        Swal.fire({
+          icon: 'success',
+          title: 'Login Successful!',
+          text: 'You have successfully logged in.',
+          confirmButtonColor: '#344E41', // Custom confirm button color
+          confirmButtonText: 'Continue to Dashboard', // Custom confirm button text
+          showCancelButton: false, // Hide the cancel button
+          allowOutsideClick: false, // Prevent dismissing the alert by clicking outside
+          allowEscapeKey: false, // Prevent dismissing the alert by pressing the Escape key
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.router.navigate(['/dashboard/dashboard-data']);
+            this.closePopup();
+          }
+        });
       },
       (error) => {
-        // Handle signup error
-        console.error('login failed!', error);
+        // Handle login error
+        console.error('Login failed!', error);
+        if (error.status === 400) {
+          this.showAlerts = true;
+        }
       }
     );
   }
+  
+  
 
   hideAlert() {
     this.showAlert = false;

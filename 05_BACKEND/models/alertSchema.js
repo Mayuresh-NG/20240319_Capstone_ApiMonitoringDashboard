@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
 
 const alertSchema = new mongoose.Schema({
+  userId: {
+    type: String,
+    ref: "User",
+    required: true,
+  },
   apiConfigId: {
     type: String,
     ref: "APIConfig",

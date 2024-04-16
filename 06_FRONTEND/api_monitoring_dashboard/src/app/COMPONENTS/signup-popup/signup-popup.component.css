@@ -3,7 +3,7 @@ p {
   font-size: 18px;
   color: black;
   margin: 20px 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "karla"
 }
 
 .popup {
@@ -13,19 +13,23 @@ p {
   transform: translate(-50%, -50%);
   background-color: #fff;
   width: 670px;
-  height: 552px;
+  max-height: 80vh; /* Maximum height for the popup */
+  overflow-y: auto; /* Enable vertical scrolling */
   z-index: 3;
-  border-radius: 10px;
+  border-top-left-radius: 20px; /* Top-left border radius */
+  border-bottom-left-radius: 20px; /* Bottom-left border radius */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  border-radius: 20px;
 }
+
 
 .popup-content {
   display: flex;
   height: 100%;
   overflow: hidden;
-  border-radius: 20px;
+  border-top-left-radius: 20px; /* Top-left border radius */
+  border-bottom-left-radius: 20px; /* Bottom-left border radius */
 }
+
 
 .left-section {
   width: 268px;
@@ -139,11 +143,12 @@ p {
 }
 
 .error-message {
-  color: red;
-  margin-left: 60%;
+  color: white;
+  margin-left: 10%;
+  margin-right: 10%;
   margin-top: 0px;
   margin-bottom: 10px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Karla";
 }
 
 .disabled-button {
@@ -151,14 +156,13 @@ p {
   cursor: not-allowed;
 }
 
-
 .mat-snack-bar-container {
   z-index: 1500; /* Adjust as needed */
 }
 
 .alert {
   padding: 20px;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   opacity: 0;
   transition: opacity 0.6s;
@@ -185,4 +189,23 @@ p {
 
 .closebtn:hover {
   color: black;
+}
+
+.popup::-webkit-scrollbar {
+  width: 5px; 
+}
+
+/* Track */
+.popup::-webkit-scrollbar-track {
+  background: #3A5A40;
+}
+
+/* Handle */
+.popup::-webkit-scrollbar-thumb {
+  background: #3A5A40;
+}
+
+/* Handle on hover */
+.popup::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }

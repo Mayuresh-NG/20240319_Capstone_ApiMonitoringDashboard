@@ -47,6 +47,7 @@ export class SignupPopupComponent {
   fullName: string = '';
   email: string = '';
   password: string = '';
+  mobileNumber:any;
   fullNameFormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(3),
@@ -55,12 +56,14 @@ export class SignupPopupComponent {
   fullNameInputFocused: boolean = false;
   emailInputFocused: boolean = false;
   passwordInputFocused: boolean = false;
+  mobileNumberInputFocused : boolean =false;
 
   signup() {
     const userData = {
       fullName: this.fullName,
       email: this.email,
       password: this.password,
+      mobile: this.mobileNumber
     };
 
     this.signupService.signupUser(userData).subscribe(

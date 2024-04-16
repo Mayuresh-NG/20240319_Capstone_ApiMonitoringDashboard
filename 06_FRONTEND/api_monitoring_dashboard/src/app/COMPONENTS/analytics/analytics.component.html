@@ -1,12 +1,19 @@
-<div class="container">
+
   <div class="dropdown-container">
-    <label class="lable">Select API</label>
-    <select (change)="onApiSelect($event)">
+    <button class="reload-button" (click)="reload()">
+      <i class="fas fa-sync-alt"></i>
+    </button>
+    <select
+      class="newselect"
+      [(ngModel)]="selectedApi"
+      (change)="onApiSelect($event)"
+    >
+      <option value="" disabled selected>-- Select API --</option>
+      <!-- Empty option -->
       <option *ngFor="let api of apis" [value]="api._id">{{ api.name }}</option>
     </select>
-  </div>
 
-  <div class="charts-container">
-    <app-response-chart [selectedApiId]="selectedApiId"></app-response-chart>
+    <div class="charts-container">
+      <app-response-chart [selectedApiId]="selectedApiId"></app-response-chart>
+    </div>
   </div>
-</div>

@@ -1,8 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ApiService } from '../../CORE/services/api.service';
 import { SearchService } from '../../CORE/services/search.service';
 import { Subscription } from 'rxjs';
 import { MonitorService } from '../../CORE/services/monitor.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confirmation.component';
+import Swal from 'sweetalert2';
+import { SharedDataService } from '../../CORE/services/storage.service';
 
 @Component({
   selector: 'app-api-management',
@@ -13,6 +17,9 @@ export class ApiManagementComponent implements OnInit, OnDestroy {
   monitoringInProgress = false;
   filteredApis: Api[] = [];
   searchQuerySubscription = new Subscription();
+  
+  currentTheme: string = '';
+  private subscription: Subscription;
 
   ngOnInit(): void {
     this.fetchApiConfigs();
@@ -25,6 +32,7 @@ export class ApiManagementComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.searchQuerySubscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
   apis: Api[] = [];
@@ -32,21 +40,48 @@ export class ApiManagementComponent implements OnInit, OnDestroy {
   constructor(
     private apiService: ApiService,
     private searchService: SearchService,
-    private monitorService: MonitorService
-  ) {}
+    private monitorService: MonitorService,
+    private sharedDataService: SharedDataService,
+    private dialog: MatDialog
+  ) {this.subscription = this.sharedDataService.getData().subscribe(theme => {
+    this.currentTheme = theme;
+  });}
 
   toggleMonitoring(api: any, event: MouseEvent): void {
-    api.monitoringInProgress = !api.monitoringInProgress;
-    if (this.monitoringInProgress) {
-      // Stop monitoring
-      this.stopMonitoring(api, event);
+    const button = event.target as HTMLButtonElement;
+    if (!api.monitoringInProgress) {
+      Swal.fire({
+        icon: 'info',
+        title: 'Start Monitoring?',
+        text: 'Do you want to start monitoring for this API?',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, Start Monitoring',
+        cancelButtonText: 'Cancel',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.startMonitoring(api, event);
+          button.classList.add('monitoring-active');
+          api.monitoringInProgress = true;
+        }
+      });
     } else {
-      // Start monitoring
-      this.startMonitoring(api, event);
+      Swal.fire({
+        icon: 'warning',
+        title: 'Stop Monitoring?',
+        text: 'Do you want to stop monitoring for this API?',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, Stop Monitoring',
+        cancelButtonText: 'Cancel',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.stopMonitoring(api , event);
+          button.classList.remove('monitoring-active');
+          api.monitoringInProgress = false;
+        }
+      });
     }
-    // Toggle the monitoring status
-    this.monitoringInProgress = !this.monitoringInProgress;
   }
+  
 
   stopMonitoring(api: any, event: MouseEvent): void {
     const button = event.target as HTMLButtonElement;
@@ -77,25 +112,23 @@ export class ApiManagementComponent implements OnInit, OnDestroy {
     }
   }
 
-  addApi(): void {
+  addApi(): void { 
     const newApiData = {
       // Provide the data for the new API configuration
       apiUrl: 'http:localhost:3000/data',
       name: 'New API',
-      monitoringInterval: 30000, // Example monitoring interval in milliseconds
+      monitoringInterval: 30000,
     };
 
     this.apiService.addApi(newApiData).subscribe(
       (response) => {
         console.log('API added successfully:', response);
-        // Handle success, if needed
+        this.fetchApiConfigs();
       },
       (error) => {
         console.error('Failed to add API:', error);
-        // Handle error, if needed
       }
     );
-    this.fetchApiConfigs();
   }
 
   saveChanges(api: any): void {
@@ -118,10 +151,32 @@ export class ApiManagementComponent implements OnInit, OnDestroy {
       );
   }
 
+  confirmDeleteApi(api: any): void {
+    const dialogRef = this.dialog.open(DeleteConfirmationComponent, {
+      panelClass: 'confirmation-dialog-container',
+      width: '400px', // Adjust width as needed
+      data: {
+        title: 'Confirmation',
+        message: `Are you sure you want to delete the API '${api.name}'?` // Confirmation message with API name
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // User confirmed action, proceed with deletion
+        this.deleteApi(api); // Pass the API object to the delete function
+      } else {
+        // User canceled action
+        console.log('Action canceled');
+      }
+    });
+  }
+
   deleteApi(api: any): void {
     this.apiService.deleteApi(api._id).subscribe(
       () => {
         console.log('API deleted successfully');
+        this.fetchApiConfigs();
         // Optionally, update the UI to reflect the deletion
       },
       (error) => {
@@ -129,7 +184,6 @@ export class ApiManagementComponent implements OnInit, OnDestroy {
         // Handle error
       }
     );
-    this.fetchApiConfigs();
   }
 
   fetchApiConfigs(): void {
@@ -176,8 +230,8 @@ export class ApiManagementComponent implements OnInit, OnDestroy {
 }
 
 export class Api {
-  editMode: boolean = false; // Add editMode property
-  previousValues!: Partial<Api>; // Add previousValues property
+  editMode: boolean = false; 
+  previousValues!: Partial<Api>;
   monitoringInProgress: boolean = false;
 
   constructor(

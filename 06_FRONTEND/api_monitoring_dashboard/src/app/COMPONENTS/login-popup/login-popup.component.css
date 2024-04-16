@@ -121,7 +121,7 @@ p {
 }
 
 .continue-button:hover {
-  background-color: #1d1f33;
+  background-color: #344e41;
   transform: scale(1.05);
 }
 
@@ -158,11 +158,12 @@ p {
 }
 
 .error-message {
-  color: red;
-  margin-left: 60%;
+  color: white;
+  margin-left: 10%;
   margin-top: 0px;
   margin-bottom: 10px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Karla";
+  margin-right: 10%;
 }
 
 .invalid-button {
@@ -207,3 +208,7 @@ p {
   color: black;
 }
 
+.disabled-button {
+  background-color: #344e41;
+  cursor: not-allowed;
+}

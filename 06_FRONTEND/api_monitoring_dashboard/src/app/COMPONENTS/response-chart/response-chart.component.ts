@@ -1,14 +1,18 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { ChartDataService } from '../../CORE/services/chartdata.service';
 import Chart from 'chart.js/auto';
+import { Subscription } from 'rxjs';
+import { SharedDataService } from '../../CORE/services/storage.service';
 
 @Component({
   selector: 'app-response-chart',
   templateUrl: './response-chart.component.html',
   styleUrls: ['./response-chart.component.css'],
 })
-export class ResponseChartComponent implements OnChanges {
+export class ResponseChartComponent implements OnChanges,OnDestroy {
   @Input() selectedApiId: string = '';
+  currentTheme: string = '';
+  private subscription: Subscription;
 
   responseTimeData: any[] = [];
   payloadSizeData: any[] = [];
@@ -18,9 +22,22 @@ export class ResponseChartComponent implements OnChanges {
   payloadChart: any;
   throughputChart: any;
 
-  constructor(private chartDataService: ChartDataService) {}
+  tooltipText: string = '';
+  informationText: string = '';
+  isTooltipVisible: boolean = false;
+
+  constructor(private chartDataService: ChartDataService,private sharedDataService: SharedDataService) {
+    this.subscription = this.sharedDataService.getData().subscribe(theme => {
+      this.currentTheme = theme;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe(); // Unsubscribe to prevent memory leaks
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
+    // Reload the current window
     if (changes['selectedApiId'] && !changes['selectedApiId'].firstChange) {
       const newApiId = changes['selectedApiId'].currentValue;
       this.fetchChartData(newApiId);
@@ -233,10 +250,6 @@ export class ResponseChartComponent implements OnChanges {
   generateLabels(length: number): string[] {
     return Array.from({ length: length }, (_, i) => (i + 1).toString());
   }
-
-  tooltipText: string = '';
-  informationText: string = '';
-  isTooltipVisible: boolean = false;
 
   showTooltip(text: string): void {
     if (text === 'Throughput') {

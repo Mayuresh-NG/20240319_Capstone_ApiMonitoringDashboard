@@ -1,44 +1,46 @@
-<div class="card-container">
-  <div class="card">
-    <div class="tooltip" *ngIf="isTooltipVisible">{{ informationText }}</div>
-    <div
-      class="card-header"
-      (mouseover)="showTooltip('Response Time')"
-      (mouseleave)="hideTooltip()"
-    >
-      Response Time
+<div [ngClass]="currentTheme">
+  <div class="card-container">
+    <div class="card">
+      <div class="tooltip" *ngIf="isTooltipVisible">{{ informationText }}</div>
+      <div
+        class="card-header"
+        (mouseover)="showTooltip('Response Time')"
+        (mouseleave)="hideTooltip()"
+      >
+        Response Time
+      </div>
+      <div class="chart">
+        <canvas id="response-chart"></canvas>
+      </div>
     </div>
-    <div class="chart">
-      <canvas id="response-chart"></canvas>
+    <div class="card">
+      <div class="tooltip" *ngIf="isTooltipVisible">{{ informationText }}</div>
+      <div
+        class="card-header"
+        class="card-header"
+        class="card-header"
+        (mouseover)="showTooltip('Response Payload Size')"
+        (mouseleave)="hideTooltip()"
+      >
+        Response Payload Size
+      </div>
+      <div class="chart">
+        <canvas id="payload-chart"></canvas>
+      </div>
     </div>
-  </div>
-  <div class="card">
-    <div class="tooltip" *ngIf="isTooltipVisible">{{ informationText }}</div>
-    <div
-      class="card-header"
-      class="card-header"
-      class="card-header"
-      (mouseover)="showTooltip('Response Payload Size')"
-      (mouseleave)="hideTooltip()"
-    >
-      Response Payload Size
-    </div>
-    <div class="chart">
-      <canvas id="payload-chart"></canvas>
-    </div>
-  </div>
-  <div class="card">
-    <div class="tooltip" *ngIf="isTooltipVisible">{{ informationText }}</div>
-    <div
-      class="card-header"
-      class="card-header"
-      (mouseover)="showTooltip('Throughput')"
-      (mouseleave)="hideTooltip()"
-    >
-      Throughput
-    </div>
-    <div class="chart">
-      <canvas id="throughput-chart"></canvas>
+    <div class="card">
+      <div class="tooltip" *ngIf="isTooltipVisible">{{ informationText }}</div>
+      <div
+        class="card-header"
+        class="card-header"
+        (mouseover)="showTooltip('Throughput')"
+        (mouseleave)="hideTooltip()"
+      >
+        Throughput
+      </div>
+      <div class="chart">
+        <canvas id="throughput-chart"></canvas>
+      </div>
     </div>
   </div>
 </div>

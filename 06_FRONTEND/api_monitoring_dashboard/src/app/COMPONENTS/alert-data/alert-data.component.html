@@ -1,29 +1,50 @@
-<div class="alert-form">
-  <label
-    for="condition"
-    style="
-      color: white;
-      font-weight: bold;
-      font-family: Karla;
-      font-size: medium;
-    "
-    >Response Time</label
-  >
-  <input
-    type="text"
-    id="condition"
-    name="condition"
-    [(ngModel)]="condition"
-    required
-  /><label
-    style="
-      color: white;
-      font-weight: bold;
-      font-family: Karla;
-      font-size: medium;
-    "
-    >ms</label
-  >
+<div [ngClass]="currentTheme">
+  <div class="alert-form">
+    <label
+      for="condition"
+      style="
+        color: white;
+        font-weight: bold;
+        font-family: Karla;
+        font-size: medium;
+      "
+      >Response Time</label
+    >
+    <input
+      type="text"
+      id="condition"
+      name="condition"
+      [(ngModel)]="condition"
+      required
+    /><label
+      style="
+        color: white;
+        font-weight: bold;
+        font-family: Karla;
+        font-size: medium;
+      "
+      >ms</label
+    >
 
-  <button (click)="onSubmit()">Create Alert</button>
+    <button (click)="onSubmit()">Create Alert</button>
+  </div>
+
+  <div *ngIf="ReceivedAlerts.length > 0">
+    <div class="alert-card" *ngFor="let alert of ReceivedAlerts">
+      <div class="alert-info">
+        <p class="api-name">API Name: {{ alert.apiConfigId.name }}</p>
+        <p class="condition">Condition: RT >{{ alert.condition }}</p>
+        <p class="created-at">Created At: {{ alert.createdAt | date }}</p>
+        <button
+          class="delete-button"
+          (click)="confirmDeleteAlert(alert.apiConfigId.name)"
+        >
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="ReceivedAlerts.length === 0">
+    <p>No alerts found.</p>
+  </div>
 </div>

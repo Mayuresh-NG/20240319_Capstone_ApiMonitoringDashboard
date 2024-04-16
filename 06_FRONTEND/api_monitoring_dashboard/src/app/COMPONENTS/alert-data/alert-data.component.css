@@ -1,36 +1,113 @@
 .alert-form {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin-bottom: 30px;
+}
+
+.alert-form label {
+  margin-left: 10px;
+  margin-top: 7px;
+}
+
+.alert-form input {
+  width: 200px;
+  padding: 10px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-left: 10px;
+}
+
+.alert-form button {
+  padding: 10px;
+  background-color: #ef233c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 10px;
+  font-size: medium;
+}
+
+.alert-form button:hover {
+  background-color: #d90429;
+}
+.success-message {
+  background-color: #28a745;
+  color: white;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 10px;
+  text-align: center;
+  animation: fadeOut 5s forwards; /* Apply fade-out animation */
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
   }
-  
-  .alert-form label {
-    margin-left: 10px;
-    margin-top: 7px;
+  100% {
+    opacity: 0;
+    display: none; /* Hide after animation */
   }
-  
-  .alert-form input {
-    width: 200px;
-    padding: 10px;
-    margin-bottom: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-left: 10px;
-  }
-  
-  .alert-form button {
-    padding: 10px;
-    background-color: #ef233c;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-left: 10px;
-    font-size: medium;
-  }
-  
-  .alert-form button:hover {
-    background-color: #d90429;
-  }
-  
+}
+
+.alert-card {
+  margin-left: -200px; 
+  width: 225%; 
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+  padding: 10px;
+}
+
+.alert-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.api-name {
+  margin-left: 10px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.condition {
+  font-size: 15px;
+}
+
+.created-at {
+  font-size: 15px;
+  color: #666666;
+}
+
+.delete-button {
+  background-color: transparent;
+  border: none;
+  color: #d90429;
+  cursor: pointer;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.theme-light .alert-card{
+  background-color: #31363F;
+}
+
+.theme-light .alert-info{
+  color: #DAD7CD;
+}
+
+.theme-light .delete-button{
+  color: #76ABAE;
+}
+
+.theme-light .alert-form button{
+  background-color: #BBFE78;
+  color: black;
+  font-weight: bold;
+}

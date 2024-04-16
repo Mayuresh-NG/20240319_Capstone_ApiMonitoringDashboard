@@ -98,6 +98,7 @@
           name="password"
           #passwordInput="ngModel"
           minlength="6"
+          pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{6,}$"
           required
           (blur)="passwordInputFocused = false"
           (focus)="passwordInputFocused = true"
@@ -116,6 +117,40 @@
           </div>
           <div *ngIf="passwordInput.errors?.['minlength']">
             Password must be at least 6 characters
+          </div>
+          <div *ngIf="passwordInput.errors?.['pattern']">
+            Password must contain at least one uppercase letter, one lowercase
+            letter, and one digit
+          </div>
+        </div>
+      </div>
+
+      <div class="input-container">
+        <input
+          type="tel"
+          placeholder="Mobile Number"
+          [(ngModel)]="mobileNumber"
+          name="mobileNumber"
+          #mobileNumberInput="ngModel"
+          required
+          pattern="[0-9]{10}"
+          (blur)="mobileNumberInputFocused = false"
+          (focus)="mobileNumberInputFocused = true"
+        />
+        <!-- Error messages for Mobile Number -->
+        <div
+          *ngIf="
+            !mobileNumberInputFocused &&
+            mobileNumberInput.invalid &&
+            (mobileNumberInput.dirty || mobileNumberInput.touched)
+          "
+          class="error-message"
+        >
+          <div *ngIf="mobileNumberInput.errors?.['required']">
+            Mobile number is required
+          </div>
+          <div *ngIf="mobileNumberInput.errors?.['pattern']">
+            Invalid mobile number format
           </div>
         </div>
       </div>
@@ -143,8 +178,7 @@
     </div>
   </div>
 </div>
-<div class="alert" [ngClass]="{'show': showAlert}">
+<div class="alert" [ngClass]="{ show: showAlert }">
   <span class="closebtn" (click)="hideAlert()">&times;</span>
   Signup successful!
 </div>
-

@@ -56,4 +56,15 @@ export class ApiService {
     // Send the request with headers
     return this.http.delete<any>(`${this.apiUrl}/delete/${apiId}`, { headers });
   }
+
+  deleteAlert(apiId: string): Observable<any> {
+    // Get the token from local storage
+    this.token = localStorage.getItem('apitoken');
+
+    // Set the HTTP headers with the token
+    const headers = new HttpHeaders().set('Authorization', this.token);
+
+    // Send the request with headers
+    return this.http.delete<any>(`${this.apiUrl}/deleteAlert/${apiId}`, { headers });
+  }
 }

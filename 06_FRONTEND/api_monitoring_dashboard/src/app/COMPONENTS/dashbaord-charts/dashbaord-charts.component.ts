@@ -1,14 +1,24 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { ChartDataService } from '../../CORE/services/chartdata.service';
 import Chart from 'chart.js/auto';
+import { SharedDataService } from '../../CORE/services/storage.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashbaord-charts',
   templateUrl: './dashbaord-charts.component.html',
   styleUrl: './dashbaord-charts.component.css',
 })
-export class DashbaordChartsComponent implements OnChanges {
+export class DashbaordChartsComponent implements OnDestroy, OnChanges {
   @Input() selectedApiId: string = '';
+  currentTheme: string = '';
 
   tooltipText: string = '';
   informationText: string = '';
@@ -34,10 +44,9 @@ export class DashbaordChartsComponent implements OnChanges {
         '- Influenced by server processing, network latency, and payload size.\n' +
         '- Critical for ensuring acceptable user experience and system performance.';
       this.isTooltipVisible = true;
-    }
-    else if(text === "p95 and p99 Response Time")
-    {
-      this.informationText = "*p95 Response Time: Represents the response time at the 95th percentile of all observed response times. It gives insight into the typical performance of the API, filtering out occasional spikes.*p99 Response Time: Indicates the response time at the 99th percentile, where only 1% of requests exceed. It helps identify and address performance issues affecting a small but significant portion of requests."
+    } else if (text === 'p95 and p99 Response Time') {
+      this.informationText =
+        '*p95 Response Time: Represents the response time at the 95th percentile of all observed response times. It gives insight into the typical performance of the API, filtering out occasional spikes.*p99 Response Time: Indicates the response time at the 99th percentile, where only 1% of requests exceed. It helps identify and address performance issues affecting a small but significant portion of requests.';
       this.isTooltipVisible = true;
     }
   }
@@ -62,7 +71,20 @@ export class DashbaordChartsComponent implements OnChanges {
   p95ResponseTime!: number;
   p99ResponseTime!: number;
 
-  constructor(private chartDataService: ChartDataService) {}
+  private subscription: Subscription;
+
+  constructor(
+    private chartDataService: ChartDataService,
+    private sharedDataService: SharedDataService
+  ) {
+    this.subscription = this.sharedDataService.getData().subscribe(theme => {
+      this.currentTheme = theme;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe(); // Unsubscribe to prevent memory leaks
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['selectedApiId'] && !changes['selectedApiId'].firstChange) {
@@ -260,14 +282,21 @@ export class DashbaordChartsComponent implements OnChanges {
       this.radarChart = new Chart(radarChartCanvas, {
         type: 'bar',
         data: {
-          labels: ['Average Payload Size', 'Average Response Time'],
+          labels: ['Average Stats'],
           datasets: [
             {
-              label: 'Average Stats',
-              data: [this.averagePayloadSize, this.averageResponseTime],
-              backgroundColor: 'rgba(73, 60, 51, 0.5)', // Background color of the radar area
-              borderColor: 'rgba(73, 60, 51, 1)', // Border color of the radar area
-              borderWidth: 3, // Border width of the radar area
+              label: 'Average Payload Size',
+              data: [this.averagePayloadSize],
+              backgroundColor: 'rgba(119, 136, 153, 0.5)', // Cylinder disc color
+              borderColor: 'rgba(119, 136, 153, 1)',
+              borderWidth: 3,
+            },
+            {
+              label: 'Average Response Time',
+              data: [this.averageResponseTime],
+              backgroundColor: 'rgba(77, 88, 98, 0.8)', // Cylinder disc color
+              borderColor: 'rgba(77, 88, 98, 1)',
+              borderWidth: 3,
             },
           ],
         },
@@ -307,11 +336,9 @@ export class DashbaordChartsComponent implements OnChanges {
   }
 
   createp95andp99ChartChart(): void {
-    const radarChartCanvas = document.getElementById(
-      'p-chart'
-    ) as HTMLCanvasElement;
-    if (radarChartCanvas) {
-      this.radarChart = new Chart(radarChartCanvas, {
+    const pchart = document.getElementById('p-chart') as HTMLCanvasElement;
+    if (pchart) {
+      this.p95andp99Chart = new Chart(pchart, {
         type: 'bar',
         data: {
           labels: ['P-95', 'P-99'],

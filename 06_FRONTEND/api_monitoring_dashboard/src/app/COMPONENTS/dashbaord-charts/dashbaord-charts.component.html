@@ -1,54 +1,63 @@
-<div class="card-container">
-  <div class="reqcard">
-    <div class="tooltip" *ngIf="isTooltipVisible">{{ informationText }}</div>
-    <div
-      class="card-header"
-      (mouseover)="showTooltip('Request Count')"
-      (mouseleave)="hideTooltip()"
-    >
-      Request Count
+<div [ngClass]="currentTheme">
+  <div class="card-container" *ngIf="selectedApiId">
+    <div class="reqcard">
+      <div class="tooltip" *ngIf="isTooltipVisible">{{ informationText }}</div>
+      <div
+        class="card-header"
+        (mouseover)="showTooltip('Request Count')"
+        (mouseleave)="hideTooltip()"
+      >
+        Request Count
+      </div>
+      <div class="chart">
+        <canvas
+          id="cylinder-disc-stack-chart"
+          width="100"
+          height="100"
+        ></canvas>
+      </div>
     </div>
-    <div class="chart">
-      <canvas id="cylinder-disc-stack-chart" width="100" height="100"></canvas>
-    </div>
-  </div>
 
-  <div class="reqcard">
-    <div class="tooltip" *ngIf="isTooltipVisible">{{ informationText }}</div>
-    <div
-      class="card-header"
-      (mouseover)="showTooltip('Response Time Performance')"
-      (mouseleave)="hideTooltip()"
-    >
-      Response Time Performance
+    <div class="reqcard">
+      <div class="tooltip" *ngIf="isTooltipVisible">{{ informationText }}</div>
+      <div
+        class="card-header"
+        (mouseover)="showTooltip('Response Time Performance')"
+        (mouseleave)="hideTooltip()"
+      >
+        Response Time Performance
+      </div>
+      <div class="chart">
+        <canvas id="responseTimeStat-chart" width="100" height="100"></canvas>
+      </div>
     </div>
-    <div class="chart">
-      <canvas id="responseTimeStat-chart" width="100" height="100"></canvas>
-    </div>
-  </div>
 
-  <div class="reqcard">
-    <div class="tooltip" *ngIf="isTooltipVisible">{{ informationText }}</div>
-    <div
-      class="card-header"
-      (mouseover)="showTooltip('Average')"
-      (mouseleave)="hideTooltip()"
-    >
-      Average
+    <div class="reqcard">
+      <div class="tooltip" *ngIf="isTooltipVisible">{{ informationText }}</div>
+      <div
+        class="card-header"
+        (mouseover)="showTooltip('Average')"
+        (mouseleave)="hideTooltip()"
+      >
+        Average
+      </div>
+      <div class="chart">
+        <canvas id="radar-chart" width="100" height="100"></canvas>
+      </div>
     </div>
-    <div class="chart">
-      <canvas id="radar-chart" width="100" height="100"></canvas>
-    </div>
-  </div>
-  <div
-    class="reqcard"
-    (mouseover)="showTooltip('p95 and p99 Response Time')"
-    (mouseleave)="hideTooltip()"
-  >
-    <div class="tooltip">{{ informationText }}</div>
-    <div class="card-header">p95 and p99 Response Time</div>
-    <div class="chart">
-      <canvas id="p-chart" width="100" height="100"></canvas>
+
+    <div class="reqcard">
+      <div class="tooltip" *ngIf="isTooltipVisible">{{ informationText }}</div>
+      <div
+        class="card-header"
+        (mouseover)="showTooltip('p95 and p99 Response Time')"
+        (mouseleave)="hideTooltip()"
+      >
+        p95 and p99 Response Time
+      </div>
+      <div class="chart">
+        <canvas id="p-chart" width="100" height="100"></canvas>
+      </div>
     </div>
   </div>
 </div>

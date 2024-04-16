@@ -21,9 +21,15 @@ import { DashboardDataComponent } from './COMPONENTS/dashboard-data/dashboard-da
 import { OverlayModule } from '@angular/cdk/overlay';
 import { MatSelectModule } from '@angular/material/select';
 import { ResponseChartComponent } from './COMPONENTS/response-chart/response-chart.component';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { DashbaordChartsComponent } from './COMPONENTS/dashbaord-charts/dashbaord-charts.component';
 import { AlertDataComponent } from './COMPONENTS/alert-data/alert-data.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { DeleteConfirmationComponent } from './COMPONENTS/delete-confirmation/delete-confirmation.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ConfirmDeleteAlertComponent } from './COMPONENTS/confirm-delete-alert/confirm-delete-alert.component';
+import { ToastrModule } from 'ngx-toastr';
+import { NotFoundComponent } from './PAGES/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +44,10 @@ import { AlertDataComponent } from './COMPONENTS/alert-data/alert-data.component
     DashboardDataComponent,
     ResponseChartComponent,
     DashbaordChartsComponent,
-    AlertDataComponent
+    AlertDataComponent,
+    DeleteConfirmationComponent,
+    ConfirmDeleteAlertComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,7 +60,11 @@ import { AlertDataComponent } from './COMPONENTS/alert-data/alert-data.component
     MatMenuModule,
     MatIconModule,
     OverlayModule,
-    MatSelectModule,MatProgressBarModule,ReactiveFormsModule 
+    MatSelectModule,
+    MatProgressBarModule,
+    ReactiveFormsModule,
+    MatSnackBarModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

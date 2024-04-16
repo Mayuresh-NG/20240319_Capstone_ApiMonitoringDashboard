@@ -1,12 +1,13 @@
 // internal imports
 const apiConfig = require("../models/apiConfigSchema");
 const Alert = require("../models/alertSchema");
+const mongoose = require("mongoose");
 
 // Required libraries for sending alerts
 const twilio = require("twilio");
 const { accountSid, authToken, twilioNumber } = require("../utils/twilio");
 
-// Used by SendAlert api to access twillio authorization details 
+// Used by SendAlert api to access twillio authorization details
 const client = twilio(accountSid, authToken);
 
 /**Handles the configuration of a new API.
@@ -163,13 +164,35 @@ const sendAlert = (phoneNumber, message) => {
  */
 const createAlert = async (req, res) => {
   try {
-    const { apiConfigId, condition } = req.body;
-    const newAlert = new Alert({ apiConfigId, condition });
+    const { userId, apiConfigId, condition } = req.body;
+    const newAlert = new Alert({ userId, apiConfigId, condition });
     const savedAlert = await newAlert.save();
     res.json(savedAlert);
   } catch (error) {
     console.error("Error creating alert:", error);
     res.status(500).json({ error: "Failed to create alert" });
+  }
+};
+
+const getAlert = async (req, res) => {
+  try {
+    const userId = req.params.userid;
+
+    // Fetch alerts and populate with corresponding apiConfig data
+    const alerts = await Alert.find({ userId }).populate({
+      path: "apiConfigId",
+      select: "name", // Select only the 'name' property from apiConfig
+    });
+
+    if (!alerts) {
+      return res.status(404).json({ message: "No alerts found for this user" });
+    }
+
+    // Respond with combined alerts and apiConfig data
+    res.json(alerts);
+  } catch (error) {
+    console.error("Error fetching alerts:", error);
+    res.status(500).json({ error: "Failed to fetch alerts" });
   }
 };
 
@@ -180,4 +203,5 @@ module.exports = {
   deleteapi,
   sendAlert,
   createAlert,
+  getAlert,
 };

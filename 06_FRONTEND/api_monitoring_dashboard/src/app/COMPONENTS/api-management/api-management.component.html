@@ -1,3 +1,4 @@
+<div [ngClass]="currentTheme">
 <div class="container">
   <div *ngFor="let api of filteredApis" class="api-card">
     <div *ngIf="!api.editMode">
@@ -5,7 +6,7 @@
       <p class="url">URL: {{ api.apiUrl }}</p>
       <p>Interval: {{ api.monitoringInterval }}</p>
     </div>
-    <div *ngIf="api.editMode">
+    <div *ngIf="api.editMode" class="edit-mode-inputs">
       <input type="text" [(ngModel)]="api.name" placeholder="API Name" />
       <input type="text" [(ngModel)]="api.apiUrl" placeholder="API URL" />
       <input
@@ -14,6 +15,7 @@
         placeholder="Monitoring Interval"
       />
     </div>
+    
     <div class="button-group">
       <button *ngIf="!api.editMode" (click)="editApi(api)" class="edit-button">
         <i class="fa-solid fa-pen-to-square"></i>
@@ -32,10 +34,11 @@
       >
         Cancel
       </button>
-      <button (click)="deleteApi(api)" class="delete-button">
+      <button (click)="confirmDeleteApi(api)" class="delete-button">
         <i class="fas fa-trash-alt"></i>
       </button>
     </div>
+    
     <button
       *ngIf="!api.editMode"
       (click)="toggleMonitoring(api, $event)"
@@ -46,3 +49,4 @@
   </div>
 </div>
 <button (click)="addApi()" class="add-button">+</button>
+</div>

@@ -7,7 +7,7 @@
 .dropdown-container {
   position: relative;
   display: inline-block;
-  margin-left:11px ;
+  margin-left:30px ;
 }
 
 .dropdown-container select {
@@ -32,3 +32,20 @@
   color: #dad7cd;
   font-weight: bold;
 }
+
+.reload-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.reload-button i {
+  color: #DAD7CD; /* Icon color */
+  font-size: 17px; /* Icon size */
+  transition: color 0.3s; /* Add transition */
+}
+
+.reload-button i:hover {
+  color: #66afe9; /* Change icon color on hover */
+}
+

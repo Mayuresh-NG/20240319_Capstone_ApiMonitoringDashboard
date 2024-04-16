@@ -77,8 +77,7 @@ const monitorAPI = async (apiConfigId, userAgent) => {
 
     const { condition: alertresponseTime } =
       (await Alert.findOne({ apiConfigId })) || {};
-    console.log(alertresponseTime);
-
+    
     if (responseTime > alertresponseTime) {
       mdc.responseTime.push(responseTime);
       const message = `Response time exceeded threshold: ${responseTime} ms`;

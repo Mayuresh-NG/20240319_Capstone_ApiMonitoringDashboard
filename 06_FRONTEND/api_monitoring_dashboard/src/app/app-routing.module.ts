@@ -7,9 +7,10 @@ import { ApiManagementComponent } from './COMPONENTS/api-management/api-manageme
 import { AnalyticsComponent } from './COMPONENTS/analytics/analytics.component';
 import { AlertsComponent } from './COMPONENTS/alerts/alerts.component';
 import { DashboardDataComponent } from './COMPONENTS/dashboard-data/dashboard-data.component';
+import { NotFoundComponent } from './PAGES/not-found/not-found.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' }, // Redirect to dashboard if logged in
+  { path: '', redirectTo: '/dashboard/dashboard-data', pathMatch: 'full' }, 
   { path: 'landing', component: LandingPageComponent },
   {
     path: 'dashboard',
@@ -22,6 +23,7 @@ const routes: Routes = [
       { path: 'alerts', component: AlertsComponent },
     ],
   },
+  {path:'**',component:NotFoundComponent}
 ];
 
 @NgModule({
