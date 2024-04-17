@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { SignupPopupComponent } from '../../COMPONENTS/signup-popup/signup-popup.component';
-import { LoginPopupComponent } from '../../COMPONENTS/login-popup/login-popup.component';
+import { SignupPopupComponent } from '../../COMPONENTS/Landing Page/signup-popup/signup-popup.component';
+import { LoginPopupComponent } from '../../COMPONENTS/Landing Page/login-popup/login-popup.component';
 
 @Component({
   selector: 'app-landing-page',
@@ -9,27 +9,24 @@ import { LoginPopupComponent } from '../../COMPONENTS/login-popup/login-popup.co
   styleUrl: './landing-page.component.css',
 })
 export class LandingPageComponent {
+
   constructor(public dialog: MatDialog) {}
 
-  // Function to open the popup
   signupPopup(): void {
     const dialogRef = this.dialog.open(SignupPopupComponent, {
-      width: '300px', // Adjust the width based on your design
+      width: '300px', 
     });
 
-    // Handle the popup closure
     dialogRef.afterClosed().subscribe((result) => {
       console.log('The popup was closed');
     });
   }
 
-  // Function to open the popup
   loginPopup(): void {
     const dialogRef = this.dialog.open(LoginPopupComponent, {
-      width: '300px', // Adjust the width based on your design
+      width: '300px', 
     });
 
-    // Handle the popup closure
     dialogRef.afterClosed().subscribe((result) => {
       console.log('The popup was closed');
     });

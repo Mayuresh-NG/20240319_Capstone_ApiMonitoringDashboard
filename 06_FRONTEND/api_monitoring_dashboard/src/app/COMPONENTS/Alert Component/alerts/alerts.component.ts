@@ -1,14 +1,14 @@
-import { Component} from '@angular/core';
-import { ApiService } from '../../CORE/services/api.service';
+import { Component } from '@angular/core';
+import { ApiService } from '../../../CORE/services/api.service';
 
 @Component({
-  selector: 'app-dashboard-data',
-  templateUrl: './dashboard-data.component.html',
-  styleUrl: './dashboard-data.component.css',
+  selector: 'app-alerts',
+  templateUrl: './alerts.component.html',
+  styleUrl: './alerts.component.css',
 })
-export class DashboardDataComponent{
+export class AlertsComponent {
   apis: any[] = []; // Basic structure for API data
-  selectedApiId: string="";
+  selectedApiId: string = '';
 
   constructor(private apiService: ApiService) {}
 
@@ -30,5 +30,6 @@ export class DashboardDataComponent{
 
   onApiSelect(event: any): void {
     this.selectedApiId = event.target.value;
+    console.log(this.selectedApiId);
   }
 }

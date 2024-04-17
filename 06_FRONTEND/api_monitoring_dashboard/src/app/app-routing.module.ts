@@ -3,14 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './PAGES/dashboard/dashboard.component';
 import { LandingPageComponent } from './PAGES/landing-page/landing-page.component';
 import { AuthGuard } from './CORE/guard/auth.guard';
-import { ApiManagementComponent } from './COMPONENTS/api-management/api-management.component';
-import { AnalyticsComponent } from './COMPONENTS/analytics/analytics.component';
-import { AlertsComponent } from './COMPONENTS/alerts/alerts.component';
-import { DashboardDataComponent } from './COMPONENTS/dashboard-data/dashboard-data.component';
+import { ApiManagementComponent } from './COMPONENTS/API Management/api-management/api-management.component';
+import { AnalyticsComponent } from './COMPONENTS/Performance Component/analytics/analytics.component';
+import { AlertsComponent } from './COMPONENTS/Alert Component/alerts/alerts.component';
+import { DashboardDataComponent } from './COMPONENTS/Analytics component/dashboard-data/dashboard-data.component';
 import { NotFoundComponent } from './PAGES/not-found/not-found.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard/dashboard-data', pathMatch: 'full' }, 
+  { path: '', redirectTo: '/dashboard/dashboard-data', pathMatch: 'full' },
   { path: 'landing', component: LandingPageComponent },
   {
     path: 'dashboard',
@@ -23,7 +23,7 @@ const routes: Routes = [
       { path: 'alerts', component: AlertsComponent },
     ],
   },
-  {path:'**',component:NotFoundComponent}
+  { path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({

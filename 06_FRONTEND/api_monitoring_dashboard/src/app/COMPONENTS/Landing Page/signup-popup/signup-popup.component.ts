@@ -4,7 +4,7 @@ import { FormControl, FormsModule, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginPopupComponent } from '../login-popup/login-popup.component';
-import { SignupService } from '../../CORE/services/auth.service';
+import { SignupService } from '../../../CORE/services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -44,6 +44,7 @@ export class SignupPopupComponent {
 
   // Initializing variables and form controls for user inputs
   showAlert: boolean = false;
+  showAlerts: boolean = false;
   fullName: string = '';
   email: string = '';
   password: string = '';
@@ -78,6 +79,12 @@ export class SignupPopupComponent {
       (error) => {
         // Handle signup error
         console.error('Signup failed!', error);
+        if (error.status === 400) {
+          this.showAlerts = true;
+          setTimeout(() => {
+            this.showAlerts = false;
+          }, 3000);
+        }
       }
     );
   }

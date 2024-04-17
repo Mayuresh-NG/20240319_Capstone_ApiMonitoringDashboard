@@ -6,9 +6,9 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { ChartDataService } from '../../CORE/services/chartdata.service';
+import { ChartDataService } from '../../../CORE/services/chartdata.service';
 import Chart from 'chart.js/auto';
-import { SharedDataService } from '../../CORE/services/storage.service';
+import { SharedDataService } from '../../../CORE/services/storage.service';
 import { Subscription } from 'rxjs';
 
 @Component({

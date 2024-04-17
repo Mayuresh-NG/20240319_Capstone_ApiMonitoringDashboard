@@ -11,8 +11,8 @@ const apiConfigSchema = new mongoose.Schema({
   name: { type: String, required: true },
   monitoringInterval: { type: Number, default: 30000 },
   alertThresholds: {
-    responseTime: { type: Number }, 
-    errorRate: { type: Number }, 
+    responseTime: { type: Number },
+    errorRate: { type: Number },
   },
   createdAt: { type: Date, default: Date.now },
 });

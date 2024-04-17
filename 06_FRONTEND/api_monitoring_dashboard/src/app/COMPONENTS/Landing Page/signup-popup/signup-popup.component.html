@@ -182,3 +182,7 @@
   <span class="closebtn" (click)="hideAlert()">&times;</span>
   Signup successful!
 </div>
+<div class="alert" [ngClass]="{ show: showAlerts }">
+  <span class="closebtn" (click)="hideAlert()">&times;</span>
+  User Already exists!
+</div>

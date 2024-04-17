@@ -11,7 +11,7 @@ const alertSchema = new mongoose.Schema({
     ref: "APIConfig",
     required: true,
   },
-  condition: { type: Number, required: true }, 
+  condition: { type: Number, required: true },
   createdAt: { type: Date, default: Date.now },
 });
 

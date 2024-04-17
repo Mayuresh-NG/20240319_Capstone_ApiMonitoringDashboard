@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 
-import { SignupService } from '../../CORE/services/auth.service';
+import { SignupService } from '../../../CORE/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDeleteAlertComponent } from '../confirm-delete-alert/confirm-delete-alert.component';
-import { ApiService } from '../../CORE/services/api.service';
+import { ApiService } from '../../../CORE/services/api.service';
 import { Subscription } from 'rxjs';
-import { SharedDataService } from '../../CORE/services/storage.service';
+import { SharedDataService } from '../../../CORE/services/storage.service';
 
 @Component({
   selector: 'app-alert-data',

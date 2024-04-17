@@ -1,75 +1,76 @@
 <div [ngClass]="currentTheme">
-<body>
-  <div class="sidebar">
-    <img (click)="toggleTheme()" class="logo" src="../../../assets/images/api-svgrepo-com.svg" />
-    <div
-      class="sidebar-item"
-      [class.active]="isActive('/dashboard/dashboard-data')"
-      (click)="navigateTo('/dashboard/dashboard-data')"
-    >
-      <i class="fa-solid fa-chart-simple"></i> Analytics
+  <body>
+    <div class="sidebar">
+      <img
+        (click)="toggleTheme()"
+        class="logo"
+        src="../../../assets/images/api-svgrepo-com.svg"
+      />
+      <div
+        class="sidebar-item"
+        [class.active]="isActive('/dashboard/dashboard-data')"
+        (click)="navigateTo('/dashboard/dashboard-data')"
+      >
+        <i class="fa-solid fa-chart-simple"></i> Analytics
+      </div>
+      <div
+        class="sidebar-item"
+        [class.active]="isActive('/dashboard/apimanager')"
+        (click)="navigateTo('/dashboard/apimanager')"
+      >
+        <i class="fas fa-cogs"></i> API Management
+      </div>
+      <div
+        class="sidebar-item"
+        [class.active]="isActive('/dashboard/analytics')"
+        (click)="navigateTo('/dashboard/analytics')"
+      >
+        <i class="fas fa-chart-bar"></i> Performance
+      </div>
+      <div
+        class="sidebar-item"
+        [class.active]="isActive('/dashboard/alerts')"
+        (click)="navigateTo('/dashboard/alerts')"
+      >
+        <i class="fas fa-bell"></i> Alerts
+      </div>
     </div>
-    <div
-      class="sidebar-item"
-      [class.active]="isActive('/dashboard/apimanager')"
-      (click)="navigateTo('/dashboard/apimanager')"
-    >
-      <i class="fas fa-cogs"></i> API Management
-    </div>
-    <div
-      class="sidebar-item"
-      [class.active]="isActive('/dashboard/analytics')"
-      (click)="navigateTo('/dashboard/analytics')"
-    >
-      <i class="fas fa-chart-bar"></i> Performance
-    </div>
-    <div
-      class="sidebar-item"
-      [class.active]="isActive('/dashboard/alerts')"
-      (click)="navigateTo('/dashboard/alerts')"
-    >
-      <i class="fas fa-bell"></i> Alerts
-    </div>
-  </div>
 
-  <div class="main-content">
-    <div class="navbar">
-      <h1 style="margin-left:20px;">
-        Dashboard
-        <p>Welcome to API Watch</p>
-      </h1>
-      <div class="right-items">
-        <div class="search-bar-container">
-          <input
-            type="text"
-            class="search-bar"
-            placeholder="Search"
-            (input)="onSearchInputChange($event)"
-          />
-          <i class="fas fa-search search-icon"></i>
-        </div>
-
-        <div class="user-dropdown">
-          <div class="user-icon" (click)="toggleDropdown()">
-            <!-- Your user icon goes here -->
-            <i style="font-size: 40px" class="fas fa-user-circle"></i>
+    <div class="main-content">
+      <div class="navbar">
+        <h1 style="margin-left: 20px">
+          Dashboard
+          <p>Welcome to API Watch</p>
+        </h1>
+        <div class="right-items">
+          <div class="search-bar-container">
+            <input
+              type="text"
+              class="search-bar"
+              placeholder="Search"
+              (input)="onSearchInputChange($event)"
+            />
+            <i class="fas fa-search search-icon"></i>
           </div>
-          <div class="dropdown-menu" [class.show]="isDropdownOpen">
-            <button class="items" (mouseover)="viewProfile()">
-              Profile
-            </button>
-            <div *ngIf="userInfo" class="user-info">
-              <h6><strong>Name:</strong> {{ userInfo.fullName }}</h6>
-              <h6><strong>Email:</strong> {{ userInfo.email }}</h6>
-              <h6><strong>Mobile No:</strong> {{ userInfo.mobile }}</h6>
+
+          <div class="user-dropdown">
+            <div class="user-icon" (click)="toggleDropdown()">
+              <!-- Your user icon goes here -->
+              <i style="font-size: 40px" class="fas fa-user-circle"></i>
             </div>
-            <button class="items" (click)="logout()">Logout</button>
+            <div class="dropdown-menu" [class.show]="isDropdownOpen">
+              <button class="items" (mouseover)="viewProfile()">Profile</button>
+              <div *ngIf="userInfo" class="user-info">
+                <h6><strong>Name:</strong> {{ userInfo.fullName }}</h6>
+                <h6><strong>Email:</strong> {{ userInfo.email }}</h6>
+                <h6><strong>Mobile No:</strong> {{ userInfo.mobile }}</h6>
+              </div>
+              <button class="items" (click)="logout()">Logout</button>
+            </div>
           </div>
         </div>
       </div>
+      <router-outlet></router-outlet>
     </div>
-    <router-outlet></router-outlet>
-  </div>
-</body>
+  </body>
 </div>
-

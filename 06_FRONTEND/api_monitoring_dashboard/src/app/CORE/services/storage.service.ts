@@ -17,7 +17,7 @@ export class SharedDataService {
 
   setData(data: string): void {
     this.currentThemeSubject.next(data);
-    localStorage.setItem('currentTheme', data); // Update local storage
+    localStorage.setItem('currentTheme', data);
   }
 
   getData(): Observable<string> {

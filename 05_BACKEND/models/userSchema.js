@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
   mobile: {
     type: String,
     required: true,
-    match: [/^[0-9]{10}$/, 'Invalid mobile number format'], // Enforces 10-digit number pattern
+    match: [/^[0-9]{10}$/, "Invalid mobile number format"], // Enforces 10-digit number pattern
   },
   createdAt: { type: Date, default: Date.now },
   apiConfigurations: [

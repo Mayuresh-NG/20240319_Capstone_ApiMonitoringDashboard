@@ -4,10 +4,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SignupPopupComponent } from '../signup-popup/signup-popup.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { SignupService } from '../../CORE/services/auth.service';
+import { SignupService } from '../../../CORE/services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import Swal from 'sweetalert2';
-
 
 @Component({
   selector: 'app-login-popup',
@@ -18,7 +17,7 @@ export class LoginPopupComponent {
   showAlert: any;
   showAlerts: any;
   constructor(
-    public dialogRef: MatDialogRef<LoginPopupComponent>, 
+    public dialogRef: MatDialogRef<LoginPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialog: MatDialog,
     private router: Router,
@@ -65,7 +64,7 @@ export class LoginPopupComponent {
       email: this.email,
       password: this.password,
     };
-  
+
     this.signupService.loginUser(userData).subscribe(
       (response) => {
         // Handle successful login
@@ -95,8 +94,6 @@ export class LoginPopupComponent {
       }
     );
   }
-  
-  
 
   hideAlert() {
     this.showAlert = false;

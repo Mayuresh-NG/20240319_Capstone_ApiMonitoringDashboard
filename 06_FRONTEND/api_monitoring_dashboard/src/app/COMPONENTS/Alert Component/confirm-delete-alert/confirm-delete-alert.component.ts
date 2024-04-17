@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confirmation.component';
+import { DeleteConfirmationComponent } from '../../API Management/delete-confirmation/delete-confirmation.component';
 
 @Component({
   selector: 'app-confirm-delete-alert',

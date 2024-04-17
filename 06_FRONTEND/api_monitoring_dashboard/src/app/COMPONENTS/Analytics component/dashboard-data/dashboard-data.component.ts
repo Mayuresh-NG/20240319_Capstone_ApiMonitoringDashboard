@@ -1,17 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../../CORE/services/api.service';
+import { Component} from '@angular/core';
+import { ApiService } from '../../../CORE/services/api.service';
 
 @Component({
-  selector: 'app-analytics',
-  templateUrl: './analytics.component.html',
-  styleUrls: ['./analytics.component.css'],
+  selector: 'app-dashboard-data',
+  templateUrl: './dashboard-data.component.html',
+  styleUrl: './dashboard-data.component.css',
 })
-export class AnalyticsComponent implements OnInit {
+export class DashboardDataComponent{
   apis: any[] = []; // Basic structure for API data
   selectedApiId: string="";
-  selectedApi=''
 
-  
   constructor(private apiService: ApiService) {}
 
   ngOnInit(): void {
@@ -32,10 +30,5 @@ export class AnalyticsComponent implements OnInit {
 
   onApiSelect(event: any): void {
     this.selectedApiId = event.target.value;
-  }
-
-  reload()
-  {
-    window.location.reload();
   }
 }

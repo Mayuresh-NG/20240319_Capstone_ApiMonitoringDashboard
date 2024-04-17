@@ -1,8 +1,8 @@
 import { Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
-import { ChartDataService } from '../../CORE/services/chartdata.service';
+import { ChartDataService } from '../../../CORE/services/chartdata.service';
 import Chart from 'chart.js/auto';
 import { Subscription } from 'rxjs';
-import { SharedDataService } from '../../CORE/services/storage.service';
+import { SharedDataService } from '../../../CORE/services/storage.service';
 
 @Component({
   selector: 'app-response-chart',

@@ -1,12 +1,12 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ApiService } from '../../CORE/services/api.service';
-import { SearchService } from '../../CORE/services/search.service';
+import { ApiService } from '../../../CORE/services/api.service';
+import { SearchService } from '../../../CORE/services/search.service';
 import { Subscription } from 'rxjs';
-import { MonitorService } from '../../CORE/services/monitor.service';
+import { MonitorService } from '../../../CORE/services/monitor.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confirmation.component';
 import Swal from 'sweetalert2';
-import { SharedDataService } from '../../CORE/services/storage.service';
+import { SharedDataService } from '../../../CORE/services/storage.service';
 
 @Component({
   selector: 'app-api-management',
